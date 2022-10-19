@@ -26,7 +26,7 @@ search:
   rel_url: true
   # Enable or disable the search button that appears in the bottom right corner of every page
   # Supports true or false (default)
-  button: true
+  button: false
 
   # Back to top link
 back_to_top: true

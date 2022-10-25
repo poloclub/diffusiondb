@@ -95,7 +95,7 @@ by the server moderators. Therefore, DiffusionDB can potentially contain these i
 
 ## Authors
 
-Evan Montoya, Jay Wang, David Munechika, Alex Yang, Ben Hoover, Polo Chau
+Jay Wang, Evan Montoya, David Munechika, Alex Yang, Ben Hoover, Polo Chau
 
 ## Licensing Information
 

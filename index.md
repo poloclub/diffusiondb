@@ -99,7 +99,7 @@ Might include sensitive information
 
 ## Authors
 
-Evan Montoya, Jay Wang, David Munechika, Alex Yang, Ben Hoover, Polo Chau
+Jay Wang, Evan Montoya, David Munechika, Alex Yang, Ben Hoover, Polo Chau
 
 ## Licensing Information
 

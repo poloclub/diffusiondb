@@ -28,4 +28,4 @@ search:
   # Supports true or false (default)
   button: false
 
-color_scheme: dark
+color_scheme: light

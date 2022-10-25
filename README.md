@@ -84,8 +84,12 @@ See above
 
 ## Other Known Limitations
 
-See above
-Might include sensitive information
+One limitation of DiffusionDB is the possible inclusion of harmful images and prompts. We collect images and their prompts
+from the Stable Diffusion discord server. Even though the discord server has rules against users sharing any NSFW (not suitable for work,
+such as sexual and violent content) and illegal images, it is possible that some discord users had posted harmful images that were not removed
+by the server moderators. Therefore, DiffusionDB can potentially contain these images. To mitigate the potential harm, we provide a Google Form where users can report inappropriate images or prompts:
+
+[DiffusionDB Image Report/Removal Form](https://docs.google.com/forms/d/1bIsBUiLULEbzu27JLm6met_SMMO6siTPERFZWOX6bys/edit)
 
 # Additional Information
 

@@ -33,6 +33,9 @@ color_scheme: light
 
 # External navigation links
 nav_external_links:
+  - title: DiffusionDB on GitHub
+    url: https://github.com/poloclub/diffusiondb
+    hide_icon: false # set to true to hide the external link icon - defaults to false
   - title: Download DiffusionDB on Hugging Face
     url: https://huggingface.co/datasets/poloclub/diffusiondb
     hide_icon: false # set to true to hide the external link icon - defaults to false

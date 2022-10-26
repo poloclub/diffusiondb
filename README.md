@@ -4,7 +4,7 @@ DiffusionDB is the first  large-scale text-to-image prompt dataset. It contains 
 
 ## Get Started
 
-DiffusionDB is available at: [https://poloclub.github.io/diffusiondb](https://poloclub.github.io/diffusiondb).
+DiffusionDB is available at [Hugging Face Datasets](https://huggingface.co/datasets/poloclub/diffusiondb).
 
 ## Dataset Structure
 

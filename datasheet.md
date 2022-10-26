@@ -2,12 +2,10 @@
 title: Datasheet
 has_children: false
 nav_order: 2
----
 
+<!--Template from https://github.com/JRMeyer/markdown-datasheet-for-datasets/blob/master/DATASHEET.md -->
 
-<!--Template found here: https://github.com/JRMeyer/markdown-datasheet-for-datasets/blob/master/DATASHEET.md -->
-
-# Datasheet: DiffusionDB
+# Data Sheet for DiffusionDB
 
 Author: Zijie J. Wang, Evan Montoya, David Municheka, Haoyang Yang, Benjamin Hoover, Duen Horng Chau
 
@@ -89,7 +87,7 @@ of Technology.
 	We collect images and their prompts from the Stable Diffusion discord server. Even though the discord server has rules against users sharing any NSFW (not suitable for work, such as sexual and violent content) and illegal images, it is possible that some discord users had posted harmful images that were not removed by the server moderators.
 
 13. **Does the dataset relate to people?** If not, you may skip the remaining questions in this section.
-14. 
+14.
 	The dataset is gathered from messages from the public Stable Diffusion discord server.
 
 14. **Does the dataset identify any subpopulations (e.g. by age, gender)?** If so, please describe how these subpopulations are identified and provide a description of their respective distributions within the dataset.

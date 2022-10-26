@@ -158,19 +158,23 @@ This saved space and prioritized unique prompts.
 
 11. **Did the individuals in question consent to the collection and use of their data?** If so, please describe (or show with screenshots or other information) how consent was requested and provided, and provide a link or other access point to, or otherwise reproduce, the exact language to which the individuals consented.
 
-	*Your Answer Here*
+	By using the server and tools, users consented to the regulations posed by Stability AI LTD, the company that both made Stable Diffusion and runs the Discord server. This implies consent by using the tool. The exact wording is as follows:
+
+> By your use of DreamStudio Beta and the Stable Diffusion, you hereby agree to forfeit all intellectual property rights claims, worldwide, and regardless of legal jurisdiction or intellectual property law applicable therein, including forfeiture of any/all copyright claim(s), to the Content you provide or receive through your use of DreamStudio Beta and the Stable Diffusion beta Discord service.
+
+This message is contained in the rules and terms of service section of the Stable Diffusion Discord (StabilityAI, 2022). In conjunction with the previous statement about images being public domain (CC0 1.0 license), it is established that the images made by using Stable Diffusion can be used for other purposes.
 
 12. **If consent was obtained, were the consenting individuals provided with a mechanism to revoke their consent in the future or for certain uses?** If so, please provide a description, as well as a link or other access point to the mechanism (if appropriate).
 
-	*Your Answer Here*
+	Users will have the option to report harmful content or withdraw images they created through a Google Form listed on the DiffusionDB website: [https://github.com/poloclub/diffusiondb](https://github.com/poloclub/diffusiondb).
 
 13. **Has an analysis of the potential impact of the dataset and its use on data subjects (e.g. a data protection impact analysis) been conducted?** If so, please provide a description of this analysis, including the outcomes, as well as a link or other access point to any supporting documentation.
 
-	*Your Answer Here*
+	No analysis has been conducted.
 
 14. **Any other comments?**
 
-	*Your Answer Here*
+	None.
 
 
 ## Preprocessing / Cleaning / Labeling
@@ -179,19 +183,20 @@ This saved space and prioritized unique prompts.
 
 1. **Was any preprocessing/cleaning/labeling of the data done (e.g. discretization or bucketing, tokenization, part-of-speech tagging, SIFT feature extraction, removal of instances, processing of missing values)?** If so, please provide a description. If not, you may skip the remainder of the questions in this section.
 
-	*Your Answer Here*
+	The Discord chat logs include collage images, where each collage contains a grid of images that share the same prompt but have different seeds.
+We use Pillow (Clark, 2015) to split a collage into individual images. Then, among these images sharing the same prompt, we randomly select one to include in DiffusionDB. We sample images to save the dataset storage size.
 
 2. **Was the "raw" data saved in addition to the preprocessed/cleaned/labeled data (e.g. to support unanticipated future uses)?** If so, please provide a link or other access point to the "raw" data.
 
-	*Your Answer Here*
+	Raw data was not saved due to high storage requirements.
 
 3. **Is the software used to preprocess/clean/label the instances available?** If so, please provide a link or other access point.
 
-	*Your Answer Here*
+	All our data collection and preprocessing code is available at: [https://github.com/poloclub/diffusiondb](https://github.com/poloclub/diffusiondb).
 
 4. **Any other comments?**
 
-	*Your Answer Here*
+	None.
 
 
 ## Uses
@@ -200,28 +205,27 @@ This saved space and prioritized unique prompts.
 
 1. **Has the dataset been used for any tasks already?** If so, please provide a description.
 
-	*Your Answer Here*
+	No.
 
 2. **Is there a repository that links to any or all papers or systems that use the dataset?** If so, please provide a link or other access point.
 
-	*Your Answer Here*
+	No.
 
 3. **What (other) tasks could the dataset be used for?**
 
-	*Your Answer Here*
+	This dataset can be used for (1) prompt autocomplete, (2) generating images through search, (3) detecting deepfake, (4) debugging image generation, (5) explaining image generation, and more.
 
 4. **Is there anything about the composition of the dataset or the way it was collected and preprocessed/cleaned/labeled that might impact future uses?** For example, is there anything that a future user might need to know to avoid uses that could result in unfair treatment of individuals or groups (e.g. stereotyping, quality of service issues) or other undesirable harms (e.g. financial harms, legal risks) If so, please provide a description. Is there anything a future user could do to mitigate these undesirable harms?
 
-	*Your Answer Here*
+	There is minimal risk for harm: the data were already public. Personally identifiable data (e.g., discord usernames) were removed during the collection/preprocessing phases.
 
 5. **Are there tasks for which the dataset should not be used?** If so, please provide a description.
 
-	*Your Answer Here*
+	All tasks that utilize this dataset should follow the licensing policies and the regulations (StabilityAI, 2022) posed by Stability AI, the company that both made Stable Diffusion and runs the official Discord server.
 
 6. **Any other comments?**
 
-	*Your Answer Here*
-
+	None.
 
 ## Distribution
 

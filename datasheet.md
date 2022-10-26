@@ -249,7 +249,7 @@ We use Pillow (Clark, 2015) to split a collage into individual images. Then, amo
 
 5. **Have any third parties imposed IP-based or other restrictions on the data associated with the instances?** If so, please describe these restrictions, and provide a link or other access point to, or otherwise reproduce, any relevant licensing terms, as well as any fees associated with these restrictions.
 
-	All images in this dataset have a [CC) 1.0 License](https://creativecommons.org/publicdomain/zero/1.0)} and follows the Stability AI's Terms of Use (StabilityAI, 2022).
+	All images in this dataset have a [CC0 1.0 License](https://creativecommons.org/publicdomain/zero/1.0)} and follows the Stability AI's Terms of Use (StabilityAI, 2022).
 
 6. **Do any export controls or other regulatory restrictions apply to the dataset or to individual instances?** If so, please describe these restrictions, and provide a link or other access point to, or otherwise reproduce, any supporting documentation.
 

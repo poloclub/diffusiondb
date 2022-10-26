@@ -58,6 +58,19 @@ This table has seven columns: `image_name`, `prompt`, `part_id`, `seed`, `step`,
 | d34afa9d-cf06-470f-9fce-2efa0e564a13.png | close up portrait of one calico cat by vermeer. black background, three - point lighting, enchanting, realistic features, realistic proportions.                                                        | 1685    | 2007372353 | 50   | 7.0 | 8       |
 | c3a21f1f-8651-4a58-a4d4-7500d97651dc.png | a bottle of jack daniels with the word medicare replacing the word jack daniels                                                                                                                         | 243     | 1617291079 | 50   | 7.0 | 8       |
 
+To save space, we use an integer to encode the `sampler` in the table above.
+
+|Sampler|Integer Value|
+|:--|--:|
+|ddim|1|
+|plms|2|
+|k_euler|3|
+|k_euler_ancestral|4|
+|ddik_heunm|5|
+|k_dpm_2|6|
+|k_dpm_2_ancestral|7|
+|k_lms|8|
+
 ## Dataset Creation
 
 We collected all images from the official Stable Diffusion Discord server. Please read our research paper for details. The code is included in [`./scripts/`](./scripts/).

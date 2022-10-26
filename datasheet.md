@@ -8,7 +8,7 @@ nav_order: 2
 
 # Data Sheet for DiffusionDB
 
-Author: Zijie J. Wang, Evan Montoya, David Municheka, Haoyang Yang, Benjamin Hoover, Duen Horng Chau
+Author: [Jay Wang](https://zijie/wang), [Evan Montoya](https://www.linkedin.com/in/evan-montoya-b252391b4/), [David Munechika](https://www.linkedin.com/in/dmunechika/), [Alex Yang](https://alexanderyang.me), [Ben Hoover](https://www.bhoov.com), [Polo Chau](https://faculty.cc.gatech.edu/~dchau/)
 
 Organization: Georgia Institute of Technology
 
@@ -118,12 +118,12 @@ of Technology.
 
 2. **What mechanisms or procedures were used to collect the data (e.g. hardware apparatus or sensor, manual human curation, software program, software API)?** How were these mechanisms or procedures validated?
 
-	The data was gathered using a [DiscordChatExporter](https://github.com/Tyrrrz/DiscordChatExporter) (Holub, 2017), which collected images and chat messages from each channel specified. We then extracted and linked prompts to images using Beautiful Soup (Richardson, 2007). Random images and prompts were selected and manually verified to validate the prompt-image mapping.
+	The data was gathered using a [DiscordChatExporter](https://github.com/Tyrrrz/DiscordChatExporter), which collected images and chat messages from each channel specified. We then extracted and linked prompts to images using Beautiful Soup. Random images and prompts were selected and manually verified to validate the prompt-image mapping.
 
 3. **If the dataset is a sample from a larger set, what was the sampling strategy (e.g. deterministic, probabilistic with specific sampling probabilities)?**
 
-	For certain messages, there would exist a collage of $n$ images (e.g., $n$ = 2, 4, 9) with identical prompts consolidated into a single image.
-These images were split and a single image would be randomly selected from $n$ images with equal probability of any image being selected.
+	For certain messages, there would exist a collage of n images (e.g., n=2, 4, 9) with identical prompts consolidated into a single image.
+These images were split and a single image would be randomly selected from n images with equal probability of any image being selected.
 This saved space and prioritized unique prompts.
 
 4. **Who was involved in the data collection process (e.g. students, crowdworkers, contractors) and how were they compensated (e.g. how much were crowdworkers paid)?**
@@ -148,7 +148,7 @@ This saved space and prioritized unique prompts.
 
 10. **Were the individuals in question notified about the data collection?** If so, please describe (or show with screenshots or other information) how notice was provided, and provide a link or other access point to, or otherwise reproduce, the exact language of the notification itself.
 
-	Users of the channel were not notified about this specific gathering of data but agree to forfeit any intellectual property rights claims by using Stable Diffusion. In addition, users are instructed that the images are public domain and can be used by anyone for any purpose. The exact language is as follows (StabilityAI, 2022):
+	Users of the channel were not notified about this specific gathering of data but agree to forfeit any intellectual property rights claims by using Stable Diffusion. In addition, users are instructed that the images are public domain and can be used by anyone for any purpose. The exact language is as follows:
 
 > Note, that while users have forfeited copyright (and any/all intellectual property right claims) on these images, they are still public domain and can be used by anyone for any purpose, including by the user. Feel free to use images from DreamStudio Beta and the Stable Diffusion beta Discord service for anything, including commercial purposes.
 
@@ -159,11 +159,11 @@ This saved space and prioritized unique prompts.
 
 > By your use of DreamStudio Beta and the Stable Diffusion, you hereby agree to forfeit all intellectual property rights claims, worldwide, and regardless of legal jurisdiction or intellectual property law applicable therein, including forfeiture of any/all copyright claim(s), to the Content you provide or receive through your use of DreamStudio Beta and the Stable Diffusion beta Discord service.
 
-This message is contained in the rules and terms of service section of the Stable Diffusion Discord (StabilityAI, 2022). In conjunction with the previous statement about images being public domain (CC0 1.0 license), it is established that the images made by using Stable Diffusion can be used for other purposes.
+This message is contained in the rules and terms of service section of the Stable Diffusion Discord. In conjunction with the previous statement about images being public domain (CC0 1.0 license), it is established that the images made by using Stable Diffusion can be used for other purposes.
 
 12. **If consent was obtained, were the consenting individuals provided with a mechanism to revoke their consent in the future or for certain uses?** If so, please provide a description, as well as a link or other access point to the mechanism (if appropriate).
 
-	Users will have the option to report harmful content or withdraw images they created through a Google Form listed on the DiffusionDB website: [https://github.com/poloclub/diffusiondb](https://github.com/poloclub/diffusiondb).
+ Users will have the option to report harmful content or withdraw images they created through a [Google Form](https://forms.gle/GbYaSpRNYqxCafMZ9) listed on the DiffusionDB website: [https://github.com/poloclub/diffusiondb](https://github.com/poloclub/diffusiondb).
 
 13. **Has an analysis of the potential impact of the dataset and its use on data subjects (e.g. a data protection impact analysis) been conducted?** If so, please provide a description of this analysis, including the outcomes, as well as a link or other access point to any supporting documentation.
 
@@ -181,7 +181,7 @@ This message is contained in the rules and terms of service section of the Stabl
 1. **Was any preprocessing/cleaning/labeling of the data done (e.g. discretization or bucketing, tokenization, part-of-speech tagging, SIFT feature extraction, removal of instances, processing of missing values)?** If so, please provide a description. If not, you may skip the remainder of the questions in this section.
 
 	The Discord chat logs include collage images, where each collage contains a grid of images that share the same prompt but have different seeds.
-We use Pillow (Clark, 2015) to split a collage into individual images. Then, among these images sharing the same prompt, we randomly select one to include in DiffusionDB. We sample images to save the dataset storage size.
+We use Pillow to split a collage into individual images. Then, among these images sharing the same prompt, we randomly select one to include in DiffusionDB. We sample images to save the dataset storage size.
 
 2. **Was the "raw" data saved in addition to the preprocessed/cleaned/labeled data (e.g. to support unanticipated future uses)?** If so, please provide a link or other access point to the "raw" data.
 
@@ -218,7 +218,7 @@ We use Pillow (Clark, 2015) to split a collage into individual images. Then, amo
 
 5. **Are there tasks for which the dataset should not be used?** If so, please provide a description.
 
-	All tasks that utilize this dataset should follow the licensing policies and the regulations (StabilityAI, 2022) posed by Stability AI, the company that both made Stable Diffusion and runs the official Discord server.
+	All tasks that utilize this dataset should follow the licensing policies and the regulations posed by Stability AI, the company that both made Stable Diffusion and runs the official Discord server.
 
 6. **Any other comments?**
 
@@ -242,11 +242,11 @@ We use Pillow (Clark, 2015) to split a collage into individual images. Then, amo
 
 4. **Will the dataset be distributed under a copyright or other intellectual property (IP) license, and/or under applicable terms of use (ToU)?** If so, please describe this license and/or ToU, and provide a link or other access point to, or otherwise reproduce, any relevant licensing terms or ToU, as well as any fees associated with these restrictions.
 
-	All images generated by stable diffusion discord services are under the [CC0 1.0 License](https://creativecommons.org/publicdomain/zero/1.0), and therefore so are images in this dataset. In addition, the distribution of the dataset is under the Terms of Use (StabilityAI, 2022) posed by Stability AI, the company that both made Stable Diffusion and runs the official Discord server.
+	All images generated by stable diffusion discord services are under the [CC0 1.0 License](https://creativecommons.org/publicdomain/zero/1.0), and therefore so are images in this dataset. In addition, the distribution of the dataset is under the [Terms of Use](https://stability.ai/terms-of-use) posed by Stability AI, the company that both made Stable Diffusion and runs the official Discord server.
 
 5. **Have any third parties imposed IP-based or other restrictions on the data associated with the instances?** If so, please describe these restrictions, and provide a link or other access point to, or otherwise reproduce, any relevant licensing terms, as well as any fees associated with these restrictions.
 
-	All images in this dataset have a [CC0 1.0 License](https://creativecommons.org/publicdomain/zero/1.0)} and follows the Stability AI's Terms of Use (StabilityAI, 2022).
+	All images in this dataset have a [CC0 1.0 License](https://creativecommons.org/publicdomain/zero/1.0) and follows the Stability AI's [Terms of Use](https://stability.ai/terms-of-use).
 
 6. **Do any export controls or other regulatory restrictions apply to the dataset or to individual instances?** If so, please describe these restrictions, and provide a link or other access point to, or otherwise reproduce, any supporting documentation.
 
@@ -275,11 +275,11 @@ We use Pillow (Clark, 2015) to split a collage into individual images. Then, amo
 
 4. **Will the dataset be updated (e.g. to correct labeling errors, add new instances, delete instances)?** If so, please describe how often, by whom, and how updates will be communicated to users (e.g. mailing list, GitHub)?
 
-	Yes, we will monitor the Google Form where users can report harmful images and creators can remove their images. We will update the dataset bimonthly. Updates will be posted on the project website [https://poloclub.github.io/diffusiondb](https://poloclub.github.io/diffusiondb).
+ Yes, we will monitor the [Google Form](https://forms.gle/GbYaSpRNYqxCafMZ9) where users can report harmful images and creators can remove their images. We will update the dataset bimonthly. Updates will be posted on the project website [https://poloclub.github.io/diffusiondb](https://poloclub.github.io/diffusiondb).
 
 5. **If the dataset relates to people, are there applicable limits on the retention of the data associated with the instances (e.g. were individuals in question told that their data would be retained for a fixed period of time and then deleted)?** If so, please describe these limits and explain how they will be enforced.
 
-	People can use a Google Form linked on the project website to remove specific instances from DiffusionDB.
+ People can use a [Google Form](https://forms.gle/GbYaSpRNYqxCafMZ9) linked on the project website to remove specific instances from DiffusionDB.
 
 6. **Will older versions of the dataset continue to be supported/hosted/maintained?** If so, please describe how. If not, please describe how its obsolescence will be communicated to users.
 

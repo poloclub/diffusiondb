@@ -199,7 +199,7 @@ DiffusionDB is created by [Jay Wang](https://zijie/wang), [Evan Montoya](https:/
 ### Licensing Information
 
 The DiffusionDB dataset is available under the [CC0 1.0 License](https://creativecommons.org/publicdomain/zero/1.0/).
-The Python code in this repository is available under the [MIT License](./LICENSE).
+The Python code in this repository is available under the [MIT License](https://github.com/poloclub/diffusiondb/blob/main/LICENSE).
 
 ### Citation Information
 

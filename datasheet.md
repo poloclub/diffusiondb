@@ -4,6 +4,9 @@ has_children: false
 nav_order: 2
 ---
 
+
+Template found here: https://github.com/JRMeyer/markdown-datasheet-for-datasets/blob/master/DATASHEET.md
+
 # Datasheet
 
 # Datasheet: *Your Dataset Name Here*
@@ -19,7 +22,7 @@ Organization: *Your Organization Here*
 
 1. **For what purpose was the dataset created?** Was there a specific task in mind? Was there a specific gap that needed to be filled? Please provide a description.
 
-	*Your Answer Here*
+	*The DiffusionDB project was inspired by important needs in research focused on diffusion models and prompt engineering. As large text-to-image models are relatively new, there is a pressing need to understand how these models work, how to write effective prompts, and how to design tools to help users generate images. To tackle these critical challenges, we present DiffusionDB, the first large-scale prompt dataset with 2 million real prompt-image pairs.*
 
 2. **Who created this dataset (e.g. which team, research group) and on behalf of which entity (e.g. company, institution, organization)**?
 

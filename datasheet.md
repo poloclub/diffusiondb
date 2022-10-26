@@ -1,19 +1,19 @@
----
-title: Datasheet
-has_children: false
-nav_order: 2
----
+--> ---
+--> title: Datasheet
+--> has_children: false
+--> nav_order: 2
+--> ---
 
 
-Template found here: https://github.com/JRMeyer/markdown-datasheet-for-datasets/blob/master/DATASHEET.md
+--> Template found here: https://github.com/JRMeyer/markdown-datasheet-for-datasets/blob/master/DATASHEET.md
 
 # Datasheet
 
-# Datasheet: *Your Dataset Name Here*
+# Datasheet: DiffusionDB
 
-Author: *Your Name Here*
+Author: Zijie J. Wang, Evan Montoya, David Municheka, Haoyang Yang, Benjamin Hoover, Duen Horng Chau
 
-Organization: *Your Organization Here*
+Organization: Georgia Institute of Technology
 
 
 ## Motivation

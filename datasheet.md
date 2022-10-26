@@ -7,8 +7,6 @@ nav_order: 2
 
 <!--Template found here: https://github.com/JRMeyer/markdown-datasheet-for-datasets/blob/master/DATASHEET.md -->
 
-# Datasheet
-
 # Datasheet: DiffusionDB
 
 Author: Zijie J. Wang, Evan Montoya, David Municheka, Haoyang Yang, Benjamin Hoover, Duen Horng Chau

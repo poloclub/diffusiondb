@@ -29,3 +29,10 @@ search:
   button: false
 
 color_scheme: light
+
+
+# External navigation links
+nav_external_links:
+  - title: Downloading DiffusionDB on Hugging Face
+    url: https://huggingface.co/datasets/poloclub/diffusiondb
+    hide_icon: false # set to true to hide the external link icon - defaults to false

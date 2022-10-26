@@ -121,7 +121,7 @@ of Technology.
 
 2. **What mechanisms or procedures were used to collect the data (e.g. hardware apparatus or sensor, manual human curation, software program, software API)?** How were these mechanisms or procedures validated?
 
-	The data was gathered using a [DiscordChatExporter](https://github.com/Tyrrrz/DiscordChatExporter), which collected images and chat messages from each channel specified. We then extracted and linked prompts to images using Beautiful Soup. Random images and prompts were selected and manually verified to validate the prompt-image mapping.
+	The data was gathered using a [DiscordChatExporter](https://github.com/Tyrrrz/DiscordChatExporter) (Holub, 2017), which collected images and chat messages from each channel specified. We then extracted and linked prompts to images using Beautiful Soup (Richardson, 2007). Random images and prompts were selected and manually verified to validate the prompt-image mapping.
 
 3. **If the dataset is a sample from a larger set, what was the sampling strategy (e.g. deterministic, probabilistic with specific sampling probabilities)?**
 
@@ -131,27 +131,30 @@ This saved space and prioritized unique prompts.
 
 4. **Who was involved in the data collection process (e.g. students, crowdworkers, contractors) and how were they compensated (e.g. how much were crowdworkers paid)?**
 
-	*Your Answer Here*
+	Students conducted the data collection process and were compensated with stipend or course credits.
 
 5. **Over what timeframe was the data collected?** Does this timeframe match the creation timeframe of the data associated with the instances (e.g. recent crawl of old news articles)? If not, please describe the timeframe in which the data associated with the instances was created. Finally, list when the dataset was first published.
 
-	*Your Answer Here*
+	All messages were generated in August 2022 and messages were collected between October 18th and 24th 2022.
 
 7. **Were any ethical review processes conducted (e.g. by an institutional review board)?** If so, please provide a description of these review processes, including the outcomes, as well as a link or other access point to any supporting documentation.
 
-	*Your Answer Here*
+	There were no ethical review processes conducted.
 
 8. **Does the dataset relate to people?** If not, you may skip the remainder of the questions in this section.
 
-	*Your Answer Here*
+	Yes.
 
 9. **Did you collect the data from the individuals in question directly, or obtain it via third parties or other sources (e.g. websites)?**
 
-	*Your Answer Here*
+	The data was directly obtained from individual messages in the Discord server.
 
 10. **Were the individuals in question notified about the data collection?** If so, please describe (or show with screenshots or other information) how notice was provided, and provide a link or other access point to, or otherwise reproduce, the exact language of the notification itself.
 
-	*Your Answer Here*
+	Users of the channel were not notified about this specific gathering of data but agree to forfeit any intellectual property rights claims by using Stable Diffusion. In addition, users are instructed that the images are public domain and can be used by anyone for any purpose. The exact language is as follows (StabilityAI, 2022):
+
+> Note, that while users have forfeited copyright (and any/all intellectual property right claims) on these images, they are still public domain and can be used by anyone for any purpose, including by the user. Feel free to use images from DreamStudio Beta and the Stable Diffusion beta Discord service for anything, including commercial purposes.
+
 
 11. **Did the individuals in question consent to the collection and use of their data?** If so, please describe (or show with screenshots or other information) how consent was requested and provided, and provide a link or other access point to, or otherwise reproduce, the exact language to which the individuals consented.
 

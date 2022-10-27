@@ -33,6 +33,8 @@ task_ids:
 
 # DiffusionDB
 
+![](https://i.imgur.com/OJtU5zv.png)
+
 ## Table of Contents
 
 - [Dataset Description](#dataset-description)

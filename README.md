@@ -84,7 +84,7 @@ To save space, we use an integer to encode the `sampler` in the table above.
 
 ## Dataset Creation
 
-We collected all images from the official Stable Diffusion Discord server. Please read our research paper for details. The code is included in [`./scripts/`](./scripts/).
+We collected all images from the official Stable Diffusion Discord server. Please read our [research paper](https://arxiv.org/abs/2210.14896) for details. The code is included in [`./scripts/`](./scripts/).
 
 ## Data Removal
 
@@ -96,6 +96,17 @@ DiffusionDB is created by [Jay Wang](https://zijie/wang), [Evan Montoya](https:/
 
 ## Citation
 
+If you find DiffusionDB useful for your research, please consider citing our paper. Thanks!
+
+```bibtex
+@article{wangDiffusionDBLargescalePrompt2022,
+  title = {{{DiffusionDB}}: {{A}} Large-Scale Prompt Gallery Dataset for Text-to-Image Generative Models},
+  author = {Wang, Zijie J. and Montoya, Evan and Munechika, David and Yang, Haoyang and Hoover, Benjamin and Chau, Duen Horng},
+  year = {2022},
+  journal = {arXiv:2210.14896 [cs]},
+  url = {https://arxiv.org/abs/2210.14896}
+}
+```
 
 ## Licensing
 

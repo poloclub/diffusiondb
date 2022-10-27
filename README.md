@@ -1,4 +1,4 @@
-# DiffusionDB
+# DiffusionDB  <a href="https://huggingface.co/datasets/poloclub/diffusiondb"><img align="right" src="favicon.ico" height="40"></img></a>
 
 [![hugging](https://img.shields.io/badge/🤗%20Hugging%20Face-Datasets-yellow)](https://huggingface.co/datasets/poloclub/diffusiondb)
 [![license](https://img.shields.io/badge/License-CC0/MIT-blue)](#licensing)

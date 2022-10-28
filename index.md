@@ -33,7 +33,7 @@ task_ids:
 
 # DiffusionDB
 
-![](https://i.imgur.com/OJtU5zv.png)
+<img width="100%" src="https://user-images.githubusercontent.com/15007159/198505835-bcc3a34f-a782-4064-989b-135e32b577a7.gif">
 
 ## Table of Contents
 

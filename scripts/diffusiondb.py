@@ -3,6 +3,8 @@
 """Loading script for DiffusionDB."""
 
 import numpy as np
+import pandas as pd
+
 from json import load, dump
 from os.path import join, basename
 from huggingface_hub import hf_hub_url
@@ -41,7 +43,14 @@ _URLS = {}
 _PART_IDS = range(1, 2001)
 
 for i in _PART_IDS:
-    _URLS[i] = hf_hub_url("poloclub/diffusiondb", filename=f"part-{i:06}.zip")
+    _URLS[i] = hf_hub_url(
+        "datasets/poloclub/diffusiondb", filename=f"images/part-{i:06}.zip"
+    )
+
+# Add the metadata parquet URL as well
+_URLS["metadata"] = hf_hub_url(
+    "datasets/poloclub/diffusiondb", filename=f"metadata.parquet"
+)
 
 
 class DiffusionDBConfig(datasets.BuilderConfig):
@@ -107,22 +116,46 @@ class DiffusionDB(datasets.GeneratorBasedBuilder):
         ),
     )
 
+    # We also prove a text-only option, which loads the meatadata parquet file
+    BUILDER_CONFIGS.append(
+        DiffusionDBConfig(
+            name="text_only",
+            part_ids=[],
+            description="Only include all prompts and parameters (no image)",
+        ),
+    )
+
     # Default to only load 1k random images
     DEFAULT_CONFIG_NAME = "random_1k"
 
     def _info(self):
         """Specify the information of DiffusionDB."""
 
-        features = datasets.Features(
-            {
-                "image": datasets.Image(),
-                "prompt": datasets.Value("string"),
-                "seed": datasets.Value("int64"),
-                "step": datasets.Value("int64"),
-                "cfg": datasets.Value("float32"),
-                "sampler": datasets.Value("string"),
-            },
-        )
+        if self.config.name == "text_only":
+            features = datasets.Features(
+                {
+                    "image_name": datasets.Value("string"),
+                    "prompt": datasets.Value("string"),
+                    "part_id": datasets.Value("int64"),
+                    "seed": datasets.Value("int64"),
+                    "step": datasets.Value("int64"),
+                    "cfg": datasets.Value("float32"),
+                    "sampler": datasets.Value("string"),
+                },
+            )
+
+        else:
+            features = datasets.Features(
+                {
+                    "image": datasets.Image(),
+                    "prompt": datasets.Value("string"),
+                    "seed": datasets.Value("int64"),
+                    "step": datasets.Value("int64"),
+                    "cfg": datasets.Value("float32"),
+                    "sampler": datasets.Value("string"),
+                },
+            )
+
         return datasets.DatasetInfo(
             description=_DESCRIPTION,
             features=features,
@@ -154,6 +187,11 @@ class DiffusionDB(datasets.GeneratorBasedBuilder):
             data_dirs.append(data_dir)
             json_paths.append(join(data_dir, f"part-{cur_part_id:06}.json"))
 
+        # If we are in text_only mode, we only need to download the parquet file
+        # For convenience, we save the parquet path in `data_dirs`
+        if self.config.name == "text_only":
+            data_dirs = [dl_manager.download(_URLS["metadata"])]
+
         return [
             datasets.SplitGenerator(
                 name=datasets.Split.TRAIN,
@@ -171,26 +209,44 @@ class DiffusionDB(datasets.GeneratorBasedBuilder):
         # The `key` is for legacy reasons (tfds) and is not important in itself,
         # but must be unique for each example.
 
-        # Iterate through all extracted zip folders
-        num_data_dirs = len(data_dirs)
-        assert num_data_dirs == len(json_paths)
-
-        for k in range(num_data_dirs):
-            cur_data_dir = data_dirs[k]
-            cur_json_path = json_paths[k]
-
-            json_data = load(open(cur_json_path, "r", encoding="utf8"))
-
-            for img_name in json_data:
-                img_params = json_data[img_name]
-                img_path = join(cur_data_dir, img_name)
-
-                # Yields examples as (key, example) tuples
-                yield img_name, {
-                    "image": {"path": img_path, "bytes": open(img_path, "rb").read()},
-                    "prompt": img_params["p"],
-                    "seed": int(img_params["se"]),
-                    "step": int(img_params["st"]),
-                    "cfg": float(img_params["c"]),
-                    "sampler": img_params["sa"],
+        # Load the metadata parquet file if the config is text_only
+        if self.config.name == "text_only":
+            metadata_df = pd.read_parquet(data_dirs[0])
+            for _, row in metadata_df.iterrows():
+                yield row["image_name"], {
+                    "image_name": row["image_name"],
+                    "prompt": row["prompt"],
+                    "part_id": row["part_id"],
+                    "seed": row["seed"],
+                    "step": row["step"],
+                    "cfg": row["cfg"],
+                    "sampler": row["sampler"],
                 }
+
+        else:
+            # Iterate through all extracted zip folders for images
+            num_data_dirs = len(data_dirs)
+            assert num_data_dirs == len(json_paths)
+
+            for k in range(num_data_dirs):
+                cur_data_dir = data_dirs[k]
+                cur_json_path = json_paths[k]
+
+                json_data = load(open(cur_json_path, "r", encoding="utf8"))
+
+                for img_name in json_data:
+                    img_params = json_data[img_name]
+                    img_path = join(cur_data_dir, img_name)
+
+                    # Yields examples as (key, example) tuples
+                    yield img_name, {
+                        "image": {
+                            "path": img_path,
+                            "bytes": open(img_path, "rb").read(),
+                        },
+                        "prompt": img_params["p"],
+                        "seed": int(img_params["se"]),
+                        "step": int(img_params["st"]),
+                        "cfg": float(img_params["c"]),
+                        "sampler": img_params["sa"],
+                    }

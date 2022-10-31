@@ -134,9 +134,85 @@ For example, below is the image of `f3501e05-aef7-4225-a9e9-f516527408ac.png` an
 - `st`: Steps
 - `sa`: Sampler
 
+At the top level folder of DiffusionDB, we include a metadata table in Parquet format `metadata.parquet`.
+This table has seven columns: `image_name`, `prompt`, `part_id`, `seed`, `step`, `cfg`, and `sampler`, and it has 2 million rows where each row represents an image. `seed`, `step`, and `cfg` are We choose Parquet because it is column-based: researchers can efficiently query individual columns (e.g., prompts) without reading the entire table. Below are the five random rows from the table.
+
+| image_name                               | prompt                                                                                                                                                                                                  | part_id | seed       | step | cfg | sampler |
+|------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|------------|------|-----|---------|
+| 49f1e478-ade6-49a8-a672-6e06c78d45fc.png | ryan gosling in fallout 4 kneels near a nuclear bomb                                                                                                                                                    | 1643    | 2220670173 | 50   | 7.0 | 8       |
+| b7d928b6-d065-4e81-bc0c-9d244fd65d0b.png | A beautiful robotic woman dreaming, cinematic lighting, soft bokeh, sci-fi, modern, colourful, highly detailed, digital painting, artstation, concept art, sharp focus, illustration, by greg rutkowski | 87      | 51324658   | 130  | 6.0 | 8       |
+| 19b1b2f1-440e-4588-ba96-1ac19888c4ba.png | bestiary of creatures from the depths of the unconscious psyche, in the style of a macro photograph with shallow dof                                                                                    | 754     | 3953796708 | 50   | 7.0 | 8       |
+| d34afa9d-cf06-470f-9fce-2efa0e564a13.png | close up portrait of one calico cat by vermeer. black background, three - point lighting, enchanting, realistic features, realistic proportions.                                                        | 1685    | 2007372353 | 50   | 7.0 | 8       |
+| c3a21f1f-8651-4a58-a4d4-7500d97651dc.png | a bottle of jack daniels with the word medicare replacing the word jack daniels                                                                                                                         | 243     | 1617291079 | 50   | 7.0 | 8       |
+
+To save space, we use an integer to encode the `sampler` in the table above.
+
+|Sampler|Integer Value|
+|:--|--:|
+|ddim|1|
+|plms|2|
+|k_euler|3|
+|k_euler_ancestral|4|
+|ddik_heunm|5|
+|k_dpm_2|6|
+|k_dpm_2_ancestral|7|
+|k_lms|8|
+|others|9|
+
 ### Data Splits
 
 We split 2 million images into 2,000 folders where each folder contains 1,000 images and a JSON file.
+
+### Loading Data Subsets
+
+DiffusionDB is large (1.6TB)! However, with our modularized file structure, you can easily load a desirable number of images and their prompts and hyperparameters. In the [`example-loading.ipynb`](https://github.com/poloclub/diffusiondb/blob/main/notebooks/example-loading.ipynb) notebook, we demonstrate three methods to load a subset of DiffusionDB. Below is a short summary.
+
+#### Method 1: Using Hugging Face Datasets Loader
+
+You can use the Hugging Face [`Datasets`](https://huggingface.co/docs/datasets/quickstart) library to easily load prompts and images from DiffusionDB. We pre-defined 16 DiffusionDB subsets (configurations) based on the number of instances. You can see all subsets in the [Dataset Preview](https://huggingface.co/datasets/poloclub/diffusiondb/viewer/all/train).
+
+```python
+import numpy as np
+from datasets import load_dataset
+
+# Load the dataset with the `random_1k` subset
+dataset = load_dataset('poloclub/diffusiondb', 'random_1k')
+```
+
+#### Method 2. Manually Download the Data
+
+All zip files in DiffusionDB have the following URLs, where `{xxxxxx}` ranges from `000001` to `002000`. Therefore, you can write a script to download any number of zip files and use them for your task.
+
+`https://huggingface.co/datasets/poloclub/diffusiondb/resolve/main/images/part-{xxxxxx}.zip`
+
+```python
+from urllib.request import urlretrieve
+import shutil
+
+# Download part-000001.zip
+part_id = 1
+part_url = f'https://huggingface.co/datasets/poloclub/diffusiondb/resolve/main/images/part-{part_id:06}.zip'
+urlretrieve(part_url, f'part-{part_id:06}.zip')
+
+# Unzip part-000001.zip
+shutil.unpack_archive(f'part-{part_id:06}.zip', f'part-{part_id:06}')
+```
+
+#### Method 3. Use `metadata.parquet` (Text Only)
+
+If your task does not require images, then you can easily access all 2 million prompts and hyperparameters in the `metadata.parquet` table.
+
+```python
+from urllib.request import urlretrieve
+import pandas as pd
+
+# Download the parquet table
+table_url = f'https://huggingface.co/datasets/poloclub/diffusiondb/resolve/main/metadata.parquet'
+urlretrieve(table_url, 'metadata.parquet')
+
+# Read the table using Pandas
+metadata_df = pd.read_parquet('metadata.parquet')
+```
 
 ## Dataset Creation
 

@@ -88,6 +88,58 @@ To save space, we use an integer to encode the `sampler` in the table above.
 |k_dpm_2|6|
 |k_dpm_2_ancestral|7|
 |k_lms|8|
+|others|9|
+
+## Loading DiffusionDB
+
+DiffusionDB is large (1.6TB)! However, with our modularized file structure, you can easily load a desirable number of images and their prompts and hyperparameters. In the [`example-loading.ipynb`](https://github.com/poloclub/diffusiondb/blob/main/notebooks/example-loading.ipynb) notebook, we demonstrate three methods to load a subset of DiffusionDB. Below is a short summary.
+
+### Method 1: Using Hugging Face Datasets Loader
+
+You can use the Hugging Face [`Datasets`](https://huggingface.co/docs/datasets/quickstart) library to easily load prompts and images from DiffusionDB. We pre-defined 16 DiffusionDB subsets (configurations) based on the number of instances. You can see all subsets in the [Dataset Preview](https://huggingface.co/datasets/poloclub/diffusiondb/viewer/all/train).
+
+```python
+import numpy as np
+from datasets import load_dataset
+
+# Load the dataset with the `random_1k` subset
+dataset = load_dataset('poloclub/diffusiondb', 'random_1k')
+```
+
+### Method 2. Manually Download the Data
+
+All zip files in DiffusionDB have the following URLs, where `{xxxxxx}` ranges from `000001` to `002000`. Therefore, you can write a script to download any number of zip files and use them for your task.
+
+`https://huggingface.co/datasets/poloclub/diffusiondb/resolve/main/images/part-{xxxxxx}.zip`
+
+```python
+from urllib.request import urlretrieve
+import shutil
+
+# Download part-000001.zip
+part_id = 1
+part_url = f'https://huggingface.co/datasets/poloclub/diffusiondb/resolve/main/images/part-{part_id:06}.zip'
+urlretrieve(part_url, f'part-{part_id:06}.zip')
+
+# Unzip part-000001.zip
+shutil.unpack_archive(f'part-{part_id:06}.zip', f'part-{part_id:06}')
+```
+
+### Method 3. Use `metadata.parquet` (Text Only)
+
+If your task does not require images, then you can easily access all 2 million prompts and hyperparameters in the `metadata.parquet` table.
+
+```python
+from urllib.request import urlretrieve
+import pandas as pd
+
+# Download the parquet table
+table_url = f'https://huggingface.co/datasets/poloclub/diffusiondb/resolve/main/metadata.parquet'
+urlretrieve(table_url, 'metadata.parquet')
+
+# Read the table using Pandas
+metadata_df = pd.read_parquet('metadata.parquet')
+```
 
 ## Dataset Creation
 

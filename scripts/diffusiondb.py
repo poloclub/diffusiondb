@@ -52,6 +52,18 @@ _URLS["metadata"] = hf_hub_url(
     "datasets/poloclub/diffusiondb", filename=f"metadata.parquet"
 )
 
+_SAMPLER_DICT = {
+    1: "ddim",
+    2: "plms",
+    3: "k_euler",
+    4: "k_euler_ancestral",
+    5: "ddik_heunm",
+    6: "k_dpm_2",
+    7: "k_dpm_2_ancestral",
+    8: "k_lms",
+    9: "others",
+}
+
 
 class DiffusionDBConfig(datasets.BuilderConfig):
     """BuilderConfig for DiffusionDB."""
@@ -220,7 +232,7 @@ class DiffusionDB(datasets.GeneratorBasedBuilder):
                     "seed": row["seed"],
                     "step": row["step"],
                     "cfg": row["cfg"],
-                    "sampler": row["sampler"],
+                    "sampler": _SAMPLER_DICT[int(row["sampler"])],
                 }
 
         else:

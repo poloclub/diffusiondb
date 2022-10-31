@@ -64,7 +64,7 @@ class DiffusionDB(datasets.GeneratorBasedBuilder):
 
     # Programmatically generate configuration options (HF requires to use a string
     # as the config key)
-    for num_k in [1, 5, 10, 50, 100, 500, 1000, 2000]:
+    for num_k in [1, 5, 10, 50, 100, 500, 1000]:
         for sampling in ["first", "random"]:
             num_k_str = f"{num_k}k" if num_k < 1000 else f"{num_k // 1000}m"
 
@@ -97,6 +97,15 @@ class DiffusionDB(datasets.GeneratorBasedBuilder):
                     description=cur_description,
                 ),
             )
+
+    # For the 2k option, random sample and first parts are the same
+    BUILDER_CONFIGS.append(
+        DiffusionDBConfig(
+            name="all",
+            part_ids=_PART_IDS,
+            description="All images with their prompts and parameters",
+        ),
+    )
 
     # Default to only load 1k random images
     DEFAULT_CONFIG_NAME = "random_1k"

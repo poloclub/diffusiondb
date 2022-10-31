@@ -5,6 +5,7 @@
 import numpy as np
 from json import load, dump
 from os.path import join, basename
+from huggingface_hub import hf_hub_url
 
 import datasets
 
@@ -34,14 +35,13 @@ _LICENSE = "CC0 1.0"
 _VERSION = datasets.Version("0.9.0")
 
 # Programmatically generate the URLs for different parts
+# hf_hub_url() provides a more flexible way to resolve the file URLs
 # https://huggingface.co/datasets/poloclub/diffusiondb/resolve/main/images/part-000001.zip
 _URLS = {}
 _PART_IDS = range(1, 2001)
 
 for i in _PART_IDS:
-    _URLS[
-        i
-    ] = f"https://huggingface.co/datasets/poloclub/diffusiondb/resolve/main/images/part-{i:06}.zip"
+    _URLS[i] = hf_hub_url("poloclub/diffusiondb", filename=f"part-{i:06}.zip")
 
 
 class DiffusionDBConfig(datasets.BuilderConfig):

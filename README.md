@@ -156,26 +156,7 @@ The script is set to unzip the files _after_ all files have downloaded as both c
 python download.py -i 1 -r 2000 -z
 ```
 
-### Method 3. Manually Download the Data
-
-All zip files in DiffusionDB have the following URLs, where `{xxxxxx}` ranges from `000001` to `002000`. Therefore, you can write a script to download any number of zip files and use them for your task.
-
-`https://huggingface.co/datasets/poloclub/diffusiondb/resolve/main/images/part-{xxxxxx}.zip`
-
-```python
-from urllib.request import urlretrieve
-import shutil
-
-# Download part-000001.zip
-part_id = 1
-part_url = f'https://huggingface.co/datasets/poloclub/diffusiondb/resolve/main/images/part-{part_id:06}.zip'
-urlretrieve(part_url, f'part-{part_id:06}.zip')
-
-# Unzip part-000001.zip
-shutil.unpack_archive(f'part-{part_id:06}.zip', f'part-{part_id:06}')
-```
-
-### Method 4. Use `metadata.parquet` (Text Only)
+### Method 3. Use `metadata.parquet` (Text Only)
 
 If your task does not require images, then you can easily access all 2 million prompts and hyperparameters in the `metadata.parquet` table.
 

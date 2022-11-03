@@ -1,6 +1,6 @@
-"""_summary_
-    A script to make downloading the DiffusionDB dataset easier.
-"""
+# Marco Lustri 2022 - https://github.com/TheLustriVA
+# MIT License
+"""A script to make downloading the DiffusionDB dataset easier."""
 from urllib.error import HTTPError
 from urllib.request import urlretrieve
 import shutil
@@ -172,14 +172,3 @@ def main(index=None, range_max=None, output=None, unzip=None):
 # without automatically running the main function.
 if __name__ == "__main__":
     main(index, range_max, output, unzip)
-
-"""
-# Acknowledgements
-
-Thank you to Polo Club of Data Science for making the dataset available.
-
-- [HuggingFace](https://huggingface.co/poloclub)
-- [GitHub](https://github.com/poloclub)
-- [GitHub Pages](https://poloclub.github.io/)
-- [Twitter](https://twitter.com/polodataclub)
-"""

@@ -92,7 +92,7 @@ To save space, we use an integer to encode the `sampler` in the table above.
 
 DiffusionDB is large (1.6TB)! However, with our modularized file structure, you can easily load a desirable number of images and their prompts and hyperparameters. In the [`example-loading.ipynb`](https://github.com/poloclub/diffusiondb/blob/main/notebooks/example-loading.ipynb) notebook, we demonstrate three methods to load a subset of DiffusionDB. Below is a short summary.
 
-### Method 1: Using Hugging Face Datasets Loader
+### Method 1: Use Hugging Face Datasets Loader
 
 You can use the Hugging Face [`Datasets`](https://huggingface.co/docs/datasets/quickstart) library to easily load prompts and images from DiffusionDB. We pre-defined 16 DiffusionDB subsets (configurations) based on the number of instances. You can see all subsets in the [Dataset Preview](https://huggingface.co/datasets/poloclub/diffusiondb/viewer/all/train).
 
@@ -104,21 +104,18 @@ from datasets import load_dataset
 dataset = load_dataset('poloclub/diffusiondb', 'random_1k')
 ```
 
-### Method 2. Use the PoloClub Downloader
+### Method 2. Use a downloader script
 
-The PoloClub Downloader is a Python package that allows you to download and load DiffusionDB. It comes as part of the repository and is activated from the command line. Below is an example of loading a subset of DiffusionDB.
+This repo includes a Python downloader [`download.py`](https://github.com/poloclub/diffusiondb/blob/main/scripts/download.py) that allows you to download and load DiffusionDB. You can use it from your command line. Below is an example of loading a subset of DiffusionDB.
 
 #### Usage/Examples
 
 The script is run using command-line arguments as follows:
 
-`-i` `--index` - File to download or lower bound of a range of files if `-r` is also set.
-
-`-r` `--range` - Upper bound of range of files to download if `-i` is set.
-
-`-o` `--output` - Name of custom output directory. Defaults to the current directory if not set.
-
-`-z` `--unzip` - Unzip the file/files after downloading
+- `-i` `--index` - File to download or lower bound of a range of files if `-r` is also set.
+- `-r` `--range` - Upper bound of range of files to download if `-i` is set.
+- `-o` `--output` - Name of custom output directory. Defaults to the current directory if not set.
+- `-z` `--unzip` - Unzip the file/files after downloading
 
 ##### Downloading a single file
 

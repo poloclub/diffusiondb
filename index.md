@@ -196,19 +196,16 @@ dataset = load_dataset('poloclub/diffusiondb', 'random_1k')
 
 #### Method 2. Use the PoloClub Downloader
 
-The PoloClub Downloader is a Python package that allows you to download and load DiffusionDB. It comes as part of the repository and is activated from the command line. Below is an example of loading a subset of DiffusionDB.
+This repo includes a Python downloader [`download.py`](https://github.com/poloclub/diffusiondb/blob/main/scripts/download.py) that allows you to download and load DiffusionDB. You can use it from your command line. Below is an example of loading a subset of DiffusionDB.
 
-##### Usage/Examples
+#### Usage/Examples
 
 The script is run using command-line arguments as follows:
 
-`-i` `--index` - File to download or lower bound of a range of files if `-r` is also set.
-
-`-r` `--range` - Upper bound of range of files to download if `-i` is set.
-
-`-o` `--output` - Name of custom output directory. Defaults to the current directory if not set.
-
-`-z` `--unzip` - Unzip the file/files after downloading
+- `-i` `--index` - File to download or lower bound of a range of files if `-r` is also set.
+- `-r` `--range` - Upper bound of range of files to download if `-i` is set.
+- `-o` `--output` - Name of custom output directory. Defaults to the current directory if not set.
+- `-z` `--unzip` - Unzip the file/files after downloading
 
 ###### Downloading a single file
 

@@ -106,7 +106,7 @@ def download(index=1, range_index=0, output=""):
                 files_to_unzip.append(loop_file_path)
 # It's writing the url of the file to a manifest file.
                 with open("manifest.txt", "a") as f:
-                    f.write(f"{url}")
+                    f.write(url, "\n")
                 time.sleep(0.1)
                 bar()
 # It's checking if the user wants to unzip the files, and if they do, it returns a list of files to

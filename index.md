@@ -37,28 +37,43 @@ task_ids:
 
 ## Table of Contents
 
-- [Dataset Description](#dataset-description)
-  - [Dataset Summary](#dataset-summary)
-  - [Supported Tasks and Leaderboards](#supported-tasks-and-leaderboards)
-  - [Languages](#languages)
-- [Dataset Structure](#dataset-structure)
-  - [Data Instances](#data-instances)
-  - [Data Fields](#data-fields)
-  - [Data Splits](#data-splits)
-- [Dataset Creation](#dataset-creation)
-  - [Curation Rationale](#curation-rationale)
-  - [Source Data](#source-data)
-  - [Annotations](#annotations)
-  - [Personal and Sensitive Information](#personal-and-sensitive-information)
-- [Considerations for Using the Data](#considerations-for-using-the-data)
-  - [Social Impact of Dataset](#social-impact-of-dataset)
-  - [Discussion of Biases](#discussion-of-biases)
-  - [Other Known Limitations](#other-known-limitations)
-- [Additional Information](#additional-information)
-  - [Dataset Curators](#dataset-curators)
-  - [Licensing Information](#licensing-information)
-  - [Citation Information](#citation-information)
-  - [Contributions](#contributions)
+- [DiffusionDB](#diffusiondb)
+  - [Table of Contents](#table-of-contents)
+  - [Dataset Description](#dataset-description)
+    - [Dataset Summary](#dataset-summary)
+    - [Supported Tasks and Leaderboards](#supported-tasks-and-leaderboards)
+    - [Languages](#languages)
+  - [Dataset Structure](#dataset-structure)
+    - [Data Instances](#data-instances)
+    - [Data Fields](#data-fields)
+    - [Data Splits](#data-splits)
+    - [Loading Data Subsets](#loading-data-subsets)
+      - [Method 1: Using Hugging Face Datasets Loader](#method-1-using-hugging-face-datasets-loader)
+      - [Method 2. Use the PoloClub Downloader](#method-2-use-the-poloclub-downloader)
+        - [Usage/Examples](#usageexamples)
+          - [Downloading a single file](#downloading-a-single-file)
+          - [Downloading a range of files](#downloading-a-range-of-files)
+          - [Downloading to a specific directory](#downloading-to-a-specific-directory)
+          - [Setting the files to unzip once they've been downloaded](#setting-the-files-to-unzip-once-theyve-been-downloaded)
+      - [Method 3. Use `metadata.parquet` (Text Only)](#method-3-use-metadataparquet-text-only)
+  - [Dataset Creation](#dataset-creation)
+    - [Curation Rationale](#curation-rationale)
+    - [Source Data](#source-data)
+      - [Initial Data Collection and Normalization](#initial-data-collection-and-normalization)
+      - [Who are the source language producers?](#who-are-the-source-language-producers)
+    - [Annotations](#annotations)
+      - [Annotation process](#annotation-process)
+      - [Who are the annotators?](#who-are-the-annotators)
+    - [Personal and Sensitive Information](#personal-and-sensitive-information)
+  - [Considerations for Using the Data](#considerations-for-using-the-data)
+    - [Social Impact of Dataset](#social-impact-of-dataset)
+    - [Discussion of Biases](#discussion-of-biases)
+    - [Other Known Limitations](#other-known-limitations)
+  - [Additional Information](#additional-information)
+    - [Dataset Curators](#dataset-curators)
+    - [Licensing Information](#licensing-information)
+    - [Citation Information](#citation-information)
+    - [Contributions](#contributions)
 
 ## Dataset Description
 
@@ -86,7 +101,7 @@ The text in the dataset is mostly English. It also contains other languages such
 
 We use a modularized file structure to distribute DiffusionDB. The 2 million images in DiffusionDB are split into 2,000 folders, where each folder contains 1,000 images and a JSON file that links these 1,000 images to their prompts and hyperparameters.
 
-```
+```bash
 ./
 ├── images
 │   ├── part-000001
@@ -179,23 +194,56 @@ from datasets import load_dataset
 dataset = load_dataset('poloclub/diffusiondb', 'random_1k')
 ```
 
-#### Method 2. Manually Download the Data
+#### Method 2. Use the PoloClub Downloader
 
-All zip files in DiffusionDB have the following URLs, where `{xxxxxx}` ranges from `000001` to `002000`. Therefore, you can write a script to download any number of zip files and use them for your task.
+The PoloClub Downloader is a Python package that allows you to download and load DiffusionDB. It comes as part of the repository and is activated from the command line. Below is an example of loading a subset of DiffusionDB.
 
-`https://huggingface.co/datasets/poloclub/diffusiondb/resolve/main/images/part-{xxxxxx}.zip`
+##### Usage/Examples
 
-```python
-from urllib.request import urlretrieve
-import shutil
+The script is run using command-line arguments as follows:
 
-# Download part-000001.zip
-part_id = 1
-part_url = f'https://huggingface.co/datasets/poloclub/diffusiondb/resolve/main/images/part-{part_id:06}.zip'
-urlretrieve(part_url, f'part-{part_id:06}.zip')
+`-i` `--index` - File to download or lower bound of a range of files if `-r` is also set.
 
-# Unzip part-000001.zip
-shutil.unpack_archive(f'part-{part_id:06}.zip', f'part-{part_id:06}')
+`-r` `--range` - Upper bound of range of files to download if `-i` is set.
+
+`-o` `--output` - Name of custom output directory. Defaults to the current directory if not set.
+
+`-z` `--unzip` - Unzip the file/files after downloading
+
+###### Downloading a single file
+
+The specific file to download is supplied as the number at the end of the file on HuggingFace. The script will automatically pad the number out and generate the URL.
+
+```bash
+python download.py -i 23
+```
+
+###### Downloading a range of files
+
+The upper and lower bounds of the set of files to download are set by the `-i` and `-r` flags respectively.
+
+```bash
+python download.py -i 1 -r 2000
+```
+
+Note that this range will download the entire dataset. The script will ask you to confirm that you have 1.7Tb free at the download destination.
+
+###### Downloading to a specific directory
+
+The script will default to the location of the dataset's `part` .zip files at `images/`. If you wish to move the download location, you should move these files as well or use a symbolic link.
+
+```bash
+python download.py -i 1 -r 2000 -o /home/$USER/datahoarding/etc
+```
+
+Again, the script will automatically add the `/` between the directory and the file when it downloads.
+
+###### Setting the files to unzip once they've been downloaded
+
+The script is set to unzip the files _after_ all files have downloaded as both can be lengthy processes in certain circumstances.
+
+```bash
+python download.py -i 1 -r 2000 -z
 ```
 
 #### Method 3. Use `metadata.parquet` (Text Only)

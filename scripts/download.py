@@ -38,7 +38,6 @@ parser.add_argument(
 parser.add_argument(
     "-z",
     "--unzip",
-    type=bool,
     default=False,
     help="Unzip the file after downloading",
     # It's setting the argument to True if it's provided.
@@ -107,7 +106,7 @@ def download(index=1, range_index=0, output=""):
                 files_to_unzip.append(loop_file_path)
                 # It's writing the url of the file to a manifest file.
                 with open("manifest.txt", "a") as f:
-                    f.write(url, "\n")
+                    f.write(url + "\n")
                 time.sleep(0.1)
                 bar()
 

@@ -96,7 +96,7 @@ def download(index=1, range_index=0, output=""):
         with alive_bar(range_index, title="Downloading files") as bar:
             for idx in range(index, range_index):
                 url = f"{baseurl}images/part-{idx:06}.zip"
-                loop_file_path = f"{output}part-{index:06}.zip"
+                loop_file_path = f"{output}part-{idx:06}.zip"
                 # It's trying to download the file, and if it encounters an
                 # HTTPError, it prints the error.
                 try:

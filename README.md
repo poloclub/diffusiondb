@@ -179,7 +179,7 @@ If you find any harmful images or prompts in DiffusionDB, you can use [this Goog
 
 ## Credits
 
-DiffusionDB is created by [Jay Wang](https://zijie/wang), [Evan Montoya](https://www.linkedin.com/in/evan-montoya-b252391b4/), [David Munechika](https://www.linkedin.com/in/dmunechika/), [Alex Yang](https://alexanderyang.me), [Ben Hoover](https://www.bhoov.com), [Polo Chau](https://faculty.cc.gatech.edu/~dchau/).
+DiffusionDB is created by [Jay Wang](https://zijie.wang), [Evan Montoya](https://www.linkedin.com/in/evan-montoya-b252391b4/), [David Munechika](https://www.linkedin.com/in/dmunechika/), [Alex Yang](https://alexanderyang.me), [Ben Hoover](https://www.bhoov.com), [Polo Chau](https://faculty.cc.gatech.edu/~dchau/).
 
 ## Citation
 

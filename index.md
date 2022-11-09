@@ -319,7 +319,7 @@ Therefore, different models can need users to write different prompts. For examp
 
 ### Dataset Curators
 
-DiffusionDB is created by [Jay Wang](https://zijie/wang), [Evan Montoya](https://www.linkedin.com/in/evan-montoya-b252391b4/), [David Munechika](https://www.linkedin.com/in/dmunechika/), [Alex Yang](https://alexanderyang.me), [Ben Hoover](https://www.bhoov.com), [Polo Chau](https://faculty.cc.gatech.edu/~dchau/).
+DiffusionDB is created by [Jay Wang](https://zijie.wang), [Evan Montoya](https://www.linkedin.com/in/evan-montoya-b252391b4/), [David Munechika](https://www.linkedin.com/in/dmunechika/), [Alex Yang](https://alexanderyang.me), [Ben Hoover](https://www.bhoov.com), [Polo Chau](https://faculty.cc.gatech.edu/~dchau/).
 
 
 ### Licensing Information

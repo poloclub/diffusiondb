@@ -1,5 +1,5 @@
 {
-  "python.linting.pylintEnabled": false,
+  "python.linting.pylintEnabled": true,
   "python.linting.enabled": true,
   "python.linting.flake8Enabled": false,
   "docwriter.style": "Auto-detect"

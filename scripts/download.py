@@ -4,9 +4,11 @@
 """A script to make downloading the DiffusionDB dataset easier."""
 from urllib.error import HTTPError
 from urllib.request import urlretrieve
-import shutil
-
 from alive_progress import alive_bar
+from os.path import exists
+
+import shutil
+import os
 import time
 import argparse
 
@@ -14,6 +16,7 @@ index = None  # initiate main arguments as None
 range_max = None
 output = None
 unzip = None
+large = None
 
 parser = argparse.ArgumentParser(description="Download a file from a URL")  #
 
@@ -43,6 +46,13 @@ parser.add_argument(
     # It's setting the argument to True if it's provided.
     action="store_true",
 )
+parser.add_argument(
+    "-l",
+    "--large",
+    default=False,
+    help="Download from DiffusionDB Large (14 million images)",
+    action="store_true",
+)
 
 args = parser.parse_args()  # parse the arguments
 
@@ -56,32 +66,49 @@ if args.output:
     output = args.output
 if args.unzip:
     unzip = args.unzip
+if args.large:
+    large = args.large
 
 if (
-    args.index and args.range and args.output and args.unzip is None
+    args.index and args.range and args.output and args.unzip and args.large is None
 ):  # if no arguments are provided, set default behaviour
     index = 1
     range_max = 2000
     output = "images"
     unzip = False
+    large = False
 
 
-def download(index=1, range_index=0, output=""):
+def download(index=1, range_index=0, output="", large=False):
     """
     Download a file from a URL and save it to a local file
 
     :param index: The index of the file to download, defaults to 1 (optional)
     :param range_index: The number of files to download. If you want to download
-        all files, set this to
-    the number of files you want to download, defaults to 0 (optional) :param
-    output: The directory to download the files to :return: A list of files to
-    unzip
+        all files, set this to the number of files you want to download,
+        defaults to 0 (optional)
+    :param output: The directory to download the files to :return: A list of
+        files to unzip
+    :param large: If downloading from DiffusionDB Large (14 million images)
+        instead of DiffusionDB 2M (2 million images)
     """
     baseurl = "https://huggingface.co/datasets/poloclub/diffusiondb/resolve/main/"
     files_to_unzip = []
-    url = f"{baseurl}images/part-{index:06}.zip"
+
+    if large:
+        if index <= 10000:
+            url = f"{baseurl}diffusiondb-large-part-1/part-{index:06}.zip"
+        else:
+            url = f"{baseurl}diffusiondb-large-part-2/part-{index:06}.zip"
+    else:
+        url = f"{baseurl}images/part-{index:06}.zip"
+
     if output != "":
         output = f"{output}/"
+
+    if not exists(output):
+        os.makedirs(output)
+
     if range_index == 0:
         print("Downloading file: ", url)
         file_path = f"{output}part-{index:06}.zip"
@@ -93,9 +120,16 @@ def download(index=1, range_index=0, output=""):
             unzip(file_path)
     else:
         # It's downloading the files numbered from index to range_index.
-        with alive_bar(range_index, title="Downloading files") as bar:
+        with alive_bar(range_index - index, title="Downloading files") as bar:
             for idx in range(index, range_index):
-                url = f"{baseurl}images/part-{idx:06}.zip"
+                if large:
+                    if idx <= 10000:
+                        url = f"{baseurl}diffusiondb-large-part-1/part-{idx:06}.zip"
+                    else:
+                        url = f"{baseurl}diffusiondb-large-part-2/part-{idx:06}.zip"
+                else:
+                    url = f"{baseurl}images/part-{idx:06}.zip"
+
                 loop_file_path = f"{output}part-{idx:06}.zip"
                 # It's trying to download the file, and if it encounters an
                 # HTTPError, it prints the error.
@@ -117,7 +151,7 @@ def download(index=1, range_index=0, output=""):
         return files_to_unzip
 
 
-def unzip(file: str):
+def unzip_file(file: str):
     """
     > This function takes a zip file as an argument and unpacks it
 
@@ -138,12 +172,12 @@ def unzip_all(files: list):
     """
     with alive_bar(len(files), title="Unzipping files") as bar:
         for file in files:
-            unzip(file)
+            unzip_file(file)
             time.sleep(0.1)
             bar()
 
 
-def main(index=None, range_max=None, output=None, unzip=None):
+def main(index=None, range_max=None, output=None, unzip=None, large=None):
     """
     `main` is a function that takes in an index, a range_max, an output, and an
     unzip, and if the user confirms that they have enough space, it downloads
@@ -154,17 +188,20 @@ def main(index=None, range_max=None, output=None, unzip=None):
     :param output: The directory to download the files to
     :param unzip: If you want to unzip the files after downloading them, set
         this to True
+    :param large: If you want to download from DiffusionDB Large (14 million
+        images) instead of DiffusionDB 2M (2 million images)
     :return: A list of files that have been downloaded
     """
-    confirmation = input("Do you have at least 1.7Tb free: (y/n)")
-    if confirmation != "y":
-        return
+    if range_max - index > 1999:
+        confirmation = input("Do you have at least 1.7Tb free: (y/n)")
+        if confirmation != "y":
+            return
     if index and range_max:
-        files = download(index, range_max, output)
+        files = download(index, range_max, output, large)
         if unzip:
             unzip_all(files)
     elif index:
-        download(index, output=output)
+        download(index, output=output, large=large)
     else:
         print("No index provided")
 
@@ -174,4 +211,4 @@ def main(index=None, range_max=None, output=None, unzip=None):
 # to import the script into the interpreter without automatically running the
 # main function.
 if __name__ == "__main__":
-    main(index, range_max, output, unzip)
+    main(index, range_max, output, unzip, large)

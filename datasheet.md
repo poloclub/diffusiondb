@@ -19,7 +19,7 @@ Organization: Georgia Institute of Technology
 
 1. **For what purpose was the dataset created?** Was there a specific task in mind? Was there a specific gap that needed to be filled? Please provide a description.
 
-	The DiffusionDB project was inspired by important needs in research focused on diffusion models and prompt engineering. As large text-to-image models are relatively new, there is a pressing need to understand how these models work, how to write effective prompts, and how to design tools to help users generate images. To tackle these critical challenges, we present DiffusionDB, the first large-scale prompt dataset with 2 million real prompt-image pairs.
+	The DiffusionDB project was inspired by important needs in research focused on diffusion models and prompt engineering. As large text-to-image models are relatively new, there is a pressing need to understand how these models work, how to write effective prompts, and how to design tools to help users generate images. To tackle these critical challenges, we present DiffusionDB, the first large-scale prompt dataset with 14 million real prompt-image pairs.
 
 2. **Who created this dataset (e.g. which team, research group) and on behalf of which entity (e.g. company, institution, organization)**?
 
@@ -45,7 +45,7 @@ of Technology.
 
 2. **How many instances are there in total (of each type, if appropriate)?**
 
-	There are 2 million instances in total in the dataset.
+	There are 14 million instances in total in the dataset.
 
 3. **Does the dataset contain all possible instances or is it a sample (not necessarily random) of instances from a larger set?** If the dataset is a sample, then what is the larger set? Is the sample representative of the larger set (e.g. geographic coverage)? If so, please describe how this representativeness was validated/verified. If it is not representative of the larger set, please describe why not (e.g. to cover a more diverse range of instances, because instances were withheld or unavailable).
 

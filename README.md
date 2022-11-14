@@ -170,6 +170,7 @@ The script is run using command-line arguments as follows:
 - `-r` `--range` - Upper bound of range of files to download if `-i` is set.
 - `-o` `--output` - Name of custom output directory. Defaults to the current directory if not set.
 - `-z` `--unzip` - Unzip the file/files after downloading
+- `-l` `--large` - Download from Diffusion DB Large. Defaults to Diffusion DB 2M.
 
 ##### Downloading a single file
 

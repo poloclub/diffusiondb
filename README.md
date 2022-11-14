@@ -55,9 +55,9 @@ We use a modularized file structure to distribute DiffusionDB. The 2 million ima
 ./
 ├── diffusiondb-large-part-1
 │   ├── part-000001
-│   │   ├── 3bfcd9cf-26ea-4303-bbe1-b095853f5360.png
-│   │   ├── 5f47c66c-51d4-4f2c-a872-a68518f44adb.png
-│   │   ├── 66b428b9-55dc-4907-b116-55aaa887de30.png
+│   │   ├── 0a8dc864-1616-4961-ac18-3fcdf76d3b08.webp
+│   │   ├── 0a25cacb-5d91-4f27-b18a-bd423762f811.webp
+│   │   ├── 0a52d584-4211-43a0-99ef-f5640ee2fc8c.webp
 │   │   ├── [...]
 │   │   └── part-000001.json
 │   ├── part-000002
@@ -66,9 +66,9 @@ We use a modularized file structure to distribute DiffusionDB. The 2 million ima
 │   └── part-010000
 ├── diffusiondb-large-part-2
 │   ├── part-010001
-│   │   ├── 3bfcd9cf-26ea-4303-bbe1-b095853f5360.png
-│   │   ├── 5f47c66c-51d4-4f2c-a872-a68518f44adb.png
-│   │   ├── 66b428b9-55dc-4907-b116-55aaa887de30.png
+│   │   ├── 0a68f671-3776-424c-91b6-c09a0dd6fc2d.webp
+│   │   ├── 0a0756e9-1249-4fe2-a21a-12c43656c7a3.webp
+│   │   ├── 0aa48f3d-f2d9-40a8-a800-c2c651ebba06.webp
 │   │   ├── [...]
 │   │   └── part-000001.json
 │   ├── part-010002
@@ -107,7 +107,9 @@ The data fields are:
 
 To help you easily access prompts and other attributes of images without downloading all the Zip files, we include two metadata tables  `metadata.parquet` and `metadata-large.parquet` for DiffusionDB 2M and DiffusionDB Large, respectively.
 
-The shape of `metadata.parquet` is (2000000, 13) and the shape of `metatable-large.parquet` is (14000000, 13). Two tables share the same schema, and each row represents an image. We store these tables in the Parquet format because Parquet is column-based: you can efficiently query individual columns (e.g., prompts) without reading the entire table. Below are three random rows from `metadata.parquet`.
+The shape of `metadata.parquet` is (2000000, 13) and the shape of `metatable-large.parquet` is (14000000, 13). Two tables share the same schema, and each row represents an image. We store these tables in the Parquet format because Parquet is column-based: you can efficiently query individual columns (e.g., prompts) without reading the entire table.
+
+Below are three random rows from `metadata.parquet`.
 
 | image_name                               | prompt                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |   part_id |       seed |   step |   cfg |   sampler |   width |   height | user_name                                                        | timestamp                 |   image_nsfw |   prompt_nsfw |
 |:-----------------------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------:|-----------:|-------:|------:|----------:|--------:|---------:|:-----------------------------------------------------------------|:--------------------------|-------------:|--------------:|

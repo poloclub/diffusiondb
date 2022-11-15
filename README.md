@@ -1,4 +1,6 @@
-# DiffusionDB  <a href="https://huggingface.co/datasets/poloclub/diffusiondb"><img align="right" src="favicon.ico" height="40"></img></a>
+# DiffusionDB  <a href="https://huggingface.co/datasets/poloclub/diffusiondb"><picture><source media="(prefers-color-scheme: dark)" srcset="https://i.imgur.com/yGxUUlX.png"><img src="favicon.ico" align="right" src="favicon.ico" height="40px"></picture>
+
+<picture><img ></img></picture></a>
 
 [![hugging](https://img.shields.io/badge/🤗%20Hugging%20Face-Datasets-yellow)](https://huggingface.co/datasets/poloclub/diffusiondb)
 [![license](https://img.shields.io/badge/License-CC0/MIT-blue)](#licensing)
@@ -144,7 +146,7 @@ Below are three random rows from `metadata.parquet`.
 
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://i.imgur.com/hiLOY8h.png">
+  <source media="(prefers-color-scheme: dark)" srcset="https://i.imgur.com/Yyu83vc.png">
   <img alt="NSFW Score distributions." src="https://i.imgur.com/1RiGAXL.png" width="100%">
 </picture>
 

@@ -143,8 +143,10 @@ Below are three random rows from `metadata.parquet`.
 > Although the Stable Diffusion model has an NSFW filter that automatically blurs user-generated NSFW images, this NSFW filter is not perfect—DiffusionDB still contains some NSFW images. Therefore, we compute and provide the NSFW scores for images and prompts using the state-of-the-art models. The distribution of these scores is shown below. Please decide an appropriate NSFW score threshold to filter out NSFW images before using DiffusionDB in your projects.
 
 
-<img src="https://i.imgur.com/1RiGAXL.png#gh-light-mode-only" width="100%">
-<img src="https://i.imgur.com/hiLOY8h.png#gh-dark-mode-only" width="100%">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://i.imgur.com/hiLOY8h.png">
+  <img alt="NSFW Score distributions." src="https://i.imgur.com/1RiGAXL.png" width="100%">
+</picture>
 
 
 ## Loading DiffusionDB

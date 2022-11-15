@@ -154,8 +154,8 @@ You can use the Hugging Face [`Datasets`](https://huggingface.co/docs/datasets/q
 import numpy as np
 from datasets import load_dataset
 
-# Load the dataset with the `random_1k` subset
-dataset = load_dataset('poloclub/diffusiondb', 'random_1k')
+# Load the dataset with the `random_1k [large]` subset
+dataset = load_dataset('poloclub/diffusiondb', 'random_1k [large]')
 ```
 
 ### Method 2. Use a downloader script

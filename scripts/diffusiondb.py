@@ -11,8 +11,6 @@ from os.path import join, basename
 from huggingface_hub import hf_hub_url
 
 import datasets
-import pyarrow as pa
-import pyarrow.parquet as pq
 
 # Find for instance the citation on arxiv or on the dataset repo/website
 _CITATION = """\
@@ -359,11 +357,12 @@ class DiffusionDB(datasets.GeneratorBasedBuilder):
                 cur_id = int(re.sub(r"part-(\d+)\.json", r"\1", basename(path)))
                 part_ids.append(cur_id)
 
-            metadata_table = pq.read_table(
+            # We have to use pandas here to make the dataset preview work (it
+            # uses streaming mode)
+            metadata_table = pd.read_parquet(
                 metadata_path,
                 filters=[("part_id", "in", part_ids)],
             )
-            print(metadata_table.shape)
 
             # Iterate through all extracted zip folders for images
             for k in range(num_data_dirs):
@@ -376,11 +375,8 @@ class DiffusionDB(datasets.GeneratorBasedBuilder):
                     img_params = json_data[img_name]
                     img_path = join(cur_data_dir, img_name)
 
-                    # Query the meta data
-                    row_mask = pa.compute.equal(
-                        metadata_table.column("image_name"), img_name
-                    )
-                    query_result = metadata_table.filter(row_mask)
+                    # Query the metadata
+                    query_result = metadata_table.query(f'`image_name` == "{img_name}"')
 
                     # Yields examples as (key, example) tuples
                     yield img_name, {
@@ -393,10 +389,10 @@ class DiffusionDB(datasets.GeneratorBasedBuilder):
                         "step": int(img_params["st"]),
                         "cfg": float(img_params["c"]),
                         "sampler": img_params["sa"],
-                        "width": query_result["width"][0].as_py(),
-                        "height": query_result["height"][0].as_py(),
-                        "user_name": query_result["user_name"][0].as_py(),
-                        "timestamp": query_result["timestamp"][0].as_py(),
-                        "image_nsfw": query_result["image_nsfw"][0].as_py(),
-                        "prompt_nsfw": query_result["prompt_nsfw"][0].as_py(),
+                        "width": query_result["width"].to_list()[0],
+                        "height": query_result["height"].to_list()[0],
+                        "user_name": query_result["user_name"].to_list()[0],
+                        "timestamp": query_result["timestamp"].to_list()[0],
+                        "image_nsfw": query_result["image_nsfw"].to_list()[0],
+                        "prompt_nsfw": query_result["prompt_nsfw"].to_list()[0],
                     }

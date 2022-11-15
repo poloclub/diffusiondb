@@ -2,6 +2,7 @@
 # MIT License
 """Loading script for DiffusionDB."""
 
+import re
 import numpy as np
 import pandas as pd
 
@@ -10,6 +11,8 @@ from os.path import join, basename
 from huggingface_hub import hf_hub_url
 
 import datasets
+import pyarrow as pa
+import pyarrow.parquet as pq
 
 # Find for instance the citation on arxiv or on the dataset repo/website
 _CITATION = """\
@@ -34,22 +37,40 @@ designing human-AI interaction tools to help users more easily use these models.
 
 _HOMEPAGE = "https://poloclub.github.io/diffusiondb"
 _LICENSE = "CC0 1.0"
-_VERSION = datasets.Version("0.9.0")
+_VERSION = datasets.Version("0.9.1")
 
 # Programmatically generate the URLs for different parts
 # hf_hub_url() provides a more flexible way to resolve the file URLs
 # https://huggingface.co/datasets/poloclub/diffusiondb/resolve/main/images/part-000001.zip
 _URLS = {}
+_URLS_LARGE = {}
 _PART_IDS = range(1, 2001)
+_PART_IDS_LARGE = range(1, 14001)
 
 for i in _PART_IDS:
     _URLS[i] = hf_hub_url(
         "datasets/poloclub/diffusiondb", filename=f"images/part-{i:06}.zip"
     )
 
+for i in _PART_IDS_LARGE:
+    if i < 10001:
+        _URLS_LARGE[i] = hf_hub_url(
+            "datasets/poloclub/diffusiondb",
+            filename=f"diffusiondb-large-part-1/part-{i:06}.zip",
+        )
+    else:
+        _URLS_LARGE[i] = hf_hub_url(
+            "datasets/poloclub/diffusiondb",
+            filename=f"diffusiondb-large-part-2/part-{i:06}.zip",
+        )
+
 # Add the metadata parquet URL as well
 _URLS["metadata"] = hf_hub_url(
-    "datasets/poloclub/diffusiondb", filename=f"metadata.parquet"
+    "datasets/poloclub/diffusiondb", filename="metadata.parquet"
+)
+
+_URLS_LARGE["metadata"] = hf_hub_url(
+    "datasets/poloclub/diffusiondb", filename="metadata-large.parquet"
 )
 
 _SAMPLER_DICT = {
@@ -68,14 +89,16 @@ _SAMPLER_DICT = {
 class DiffusionDBConfig(datasets.BuilderConfig):
     """BuilderConfig for DiffusionDB."""
 
-    def __init__(self, part_ids, **kwargs):
+    def __init__(self, part_ids, is_large, **kwargs):
         """BuilderConfig for DiffusionDB.
         Args:
           part_ids([int]): A list of part_ids.
+          is_large(bool): If downloading data from DiffusionDB Large (14 million)
           **kwargs: keyword arguments forwarded to super.
         """
         super(DiffusionDBConfig, self).__init__(version=_VERSION, **kwargs)
         self.part_ids = part_ids
+        self.is_large = is_large
 
 
 class DiffusionDB(datasets.GeneratorBasedBuilder):
@@ -87,11 +110,54 @@ class DiffusionDB(datasets.GeneratorBasedBuilder):
     # as the config key)
     for num_k in [1, 5, 10, 50, 100, 500, 1000]:
         for sampling in ["first", "random"]:
-            num_k_str = f"{num_k}k" if num_k < 1000 else f"{num_k // 1000}m"
+            for is_large in [False, True]:
+                num_k_str = f"{num_k}k" if num_k < 1000 else f"{num_k // 1000}m"
+                subset_str = " [large]" if is_large else " [2m]"
+
+                if sampling == "random":
+                    # Name the config
+                    cur_name = "random_" + num_k_str + subset_str
+
+                    # Add a short description for each config
+                    cur_description = (
+                        f"Random {num_k_str} images with their prompts and parameters"
+                    )
+
+                    # Sample part_ids
+                    total_part_ids = _PART_IDS_LARGE if is_large else _PART_IDS
+                    part_ids = np.random.choice(
+                        total_part_ids, num_k, replace=False
+                    ).tolist()
+                else:
+                    # Name the config
+                    cur_name = "first_" + num_k_str + subset_str
+
+                    # Add a short description for each config
+                    cur_description = f"The first {num_k_str} images in this dataset with their prompts and parameters"
+
+                    # Sample part_ids
+                    total_part_ids = _PART_IDS_LARGE if is_large else _PART_IDS
+                    part_ids = total_part_ids[1 : num_k + 1]
+
+                # Create configs
+                BUILDER_CONFIGS.append(
+                    DiffusionDBConfig(
+                        name=cur_name,
+                        part_ids=part_ids,
+                        is_large=is_large,
+                        description=cur_description,
+                    ),
+                )
+
+    # Add few more options for Large only
+    for num_k in [5000, 10000]:
+        for sampling in ["first", "random"]:
+            num_k_str = f"{num_k // 1000}m"
+            subset_str = " [large]"
 
             if sampling == "random":
                 # Name the config
-                cur_name = "random_" + num_k_str
+                cur_name = "random_" + num_k_str + subset_str
 
                 # Add a short description for each config
                 cur_description = (
@@ -99,31 +165,46 @@ class DiffusionDB(datasets.GeneratorBasedBuilder):
                 )
 
                 # Sample part_ids
-                part_ids = np.random.choice(_PART_IDS, num_k, replace=False).tolist()
+                total_part_ids = _PART_IDS_LARGE
+                part_ids = np.random.choice(
+                    total_part_ids, num_k, replace=False
+                ).tolist()
             else:
                 # Name the config
-                cur_name = "first_" + num_k_str
+                cur_name = "first_" + num_k_str + subset_str
 
                 # Add a short description for each config
                 cur_description = f"The first {num_k_str} images in this dataset with their prompts and parameters"
 
                 # Sample part_ids
-                part_ids = _PART_IDS[1 : num_k + 1]
+                total_part_ids = _PART_IDS_LARGE
+                part_ids = total_part_ids[1 : num_k + 1]
 
             # Create configs
             BUILDER_CONFIGS.append(
                 DiffusionDBConfig(
                     name=cur_name,
                     part_ids=part_ids,
+                    is_large=True,
                     description=cur_description,
                 ),
             )
 
-    # For the 2k option, random sample and first parts are the same
+    # Need to manually add all (2m) and all (large)
     BUILDER_CONFIGS.append(
         DiffusionDBConfig(
-            name="all",
+            name="all [2m]",
             part_ids=_PART_IDS,
+            is_large=False,
+            description="All images with their prompts and parameters",
+        ),
+    )
+
+    BUILDER_CONFIGS.append(
+        DiffusionDBConfig(
+            name="all [large]",
+            part_ids=_PART_IDS_LARGE,
+            is_large=True,
             description="All images with their prompts and parameters",
         ),
     )
@@ -131,28 +212,44 @@ class DiffusionDB(datasets.GeneratorBasedBuilder):
     # We also prove a text-only option, which loads the meatadata parquet file
     BUILDER_CONFIGS.append(
         DiffusionDBConfig(
-            name="text_only",
+            name="text_only [2m]",
             part_ids=[],
+            is_large=False,
+            description="Only include all prompts and parameters (no image)",
+        ),
+    )
+
+    BUILDER_CONFIGS.append(
+        DiffusionDBConfig(
+            name="text_only [large]",
+            part_ids=[],
+            is_large=True,
             description="Only include all prompts and parameters (no image)",
         ),
     )
 
     # Default to only load 1k random images
-    DEFAULT_CONFIG_NAME = "random_1k"
+    DEFAULT_CONFIG_NAME = "random_1k [2m]"
 
     def _info(self):
         """Specify the information of DiffusionDB."""
 
-        if self.config.name == "text_only":
+        if "text_only" in self.config.name:
             features = datasets.Features(
                 {
                     "image_name": datasets.Value("string"),
                     "prompt": datasets.Value("string"),
-                    "part_id": datasets.Value("int64"),
-                    "seed": datasets.Value("int64"),
-                    "step": datasets.Value("int64"),
+                    "part_id": datasets.Value("uint16"),
+                    "seed": datasets.Value("uint32"),
+                    "step": datasets.Value("uint16"),
                     "cfg": datasets.Value("float32"),
                     "sampler": datasets.Value("string"),
+                    "width": datasets.Value("uint16"),
+                    "height": datasets.Value("uint16"),
+                    "user_name": datasets.Value("string"),
+                    "timestamp": datasets.Value("timestamp[us, tz=UTC]"),
+                    "image_nsfw": datasets.Value("float32"),
+                    "prompt_nsfw": datasets.Value("float32"),
                 },
             )
 
@@ -161,10 +258,16 @@ class DiffusionDB(datasets.GeneratorBasedBuilder):
                 {
                     "image": datasets.Image(),
                     "prompt": datasets.Value("string"),
-                    "seed": datasets.Value("int64"),
-                    "step": datasets.Value("int64"),
+                    "seed": datasets.Value("uint32"),
+                    "step": datasets.Value("uint16"),
                     "cfg": datasets.Value("float32"),
                     "sampler": datasets.Value("string"),
+                    "width": datasets.Value("uint16"),
+                    "height": datasets.Value("uint16"),
+                    "user_name": datasets.Value("string"),
+                    "timestamp": datasets.Value("timestamp[us, tz=UTC]"),
+                    "image_nsfw": datasets.Value("float32"),
+                    "prompt_nsfw": datasets.Value("float32"),
                 },
             )
 
@@ -192,17 +295,21 @@ class DiffusionDB(datasets.GeneratorBasedBuilder):
         data_dirs = []
         json_paths = []
 
+        # Resolve the urls
+        if self.config.is_large:
+            urls = _URLS_LARGE
+        else:
+            urls = _URLS
+
         for cur_part_id in self.config.part_ids:
-            cur_url = _URLS[cur_part_id]
+            cur_url = urls[cur_part_id]
             data_dir = dl_manager.download_and_extract(cur_url)
 
             data_dirs.append(data_dir)
             json_paths.append(join(data_dir, f"part-{cur_part_id:06}.json"))
 
-        # If we are in text_only mode, we only need to download the parquet file
-        # For convenience, we save the parquet path in `data_dirs`
-        if self.config.name == "text_only":
-            data_dirs = [dl_manager.download(_URLS["metadata"])]
+        # Also download the metadata table
+        metadata_path = dl_manager.download(urls["metadata"])
 
         return [
             datasets.SplitGenerator(
@@ -211,19 +318,20 @@ class DiffusionDB(datasets.GeneratorBasedBuilder):
                 gen_kwargs={
                     "data_dirs": data_dirs,
                     "json_paths": json_paths,
+                    "metadata_path": metadata_path,
                 },
             ),
         ]
 
-    def _generate_examples(self, data_dirs, json_paths):
+    def _generate_examples(self, data_dirs, json_paths, metadata_path):
         # This method handles input defined in _split_generators to yield
         # (key, example) tuples from the dataset.
         # The `key` is for legacy reasons (tfds) and is not important in itself,
         # but must be unique for each example.
 
         # Load the metadata parquet file if the config is text_only
-        if self.config.name == "text_only":
-            metadata_df = pd.read_parquet(data_dirs[0])
+        if "text_only" in self.config.name:
+            metadata_df = pd.read_parquet(metadata_path)
             for _, row in metadata_df.iterrows():
                 yield row["image_name"], {
                     "image_name": row["image_name"],
@@ -233,13 +341,31 @@ class DiffusionDB(datasets.GeneratorBasedBuilder):
                     "step": row["step"],
                     "cfg": row["cfg"],
                     "sampler": _SAMPLER_DICT[int(row["sampler"])],
+                    "width": row["width"],
+                    "height": row["height"],
+                    "user_name": row["user_name"],
+                    "timestamp": row["timestamp"],
+                    "image_nsfw": row["image_nsfw"],
+                    "prompt_nsfw": row["prompt_nsfw"],
                 }
 
         else:
-            # Iterate through all extracted zip folders for images
             num_data_dirs = len(data_dirs)
             assert num_data_dirs == len(json_paths)
 
+            # Read the metadata table (only rows with the needed part_ids)
+            part_ids = []
+            for path in json_paths:
+                cur_id = int(re.sub(r"part-(\d+)\.json", r"\1", basename(path)))
+                part_ids.append(cur_id)
+
+            metadata_table = pq.read_table(
+                metadata_path,
+                filters=[("part_id", "in", part_ids)],
+            )
+            print(metadata_table.shape)
+
+            # Iterate through all extracted zip folders for images
             for k in range(num_data_dirs):
                 cur_data_dir = data_dirs[k]
                 cur_json_path = json_paths[k]
@@ -249,6 +375,12 @@ class DiffusionDB(datasets.GeneratorBasedBuilder):
                 for img_name in json_data:
                     img_params = json_data[img_name]
                     img_path = join(cur_data_dir, img_name)
+
+                    # Query the meta data
+                    row_mask = pa.compute.equal(
+                        metadata_table.column("image_name"), img_name
+                    )
+                    query_result = metadata_table.filter(row_mask)
 
                     # Yields examples as (key, example) tuples
                     yield img_name, {
@@ -261,4 +393,10 @@ class DiffusionDB(datasets.GeneratorBasedBuilder):
                         "step": int(img_params["st"]),
                         "cfg": float(img_params["c"]),
                         "sampler": img_params["sa"],
+                        "width": query_result["width"][0].as_py(),
+                        "height": query_result["height"][0].as_py(),
+                        "user_name": query_result["user_name"][0].as_py(),
+                        "timestamp": query_result["timestamp"][0].as_py(),
+                        "image_nsfw": query_result["image_nsfw"][0].as_py(),
+                        "prompt_nsfw": query_result["prompt_nsfw"][0].as_py(),
                     }

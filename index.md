@@ -220,7 +220,7 @@ Below are three random rows from `metadata.parquet`.
 |`seed`|`uint32`| Random seed used to generate this image.|
 |`step`|`uint16`| Step count (hyperparameter).|
 |`cfg`|`float32`| Guidance scale (hyperparameter).|
-|`sampler`|`uint8`| Sampler method (hyperparameter). Mapping: {1: "ddim", 2: "plms", 3: "k_euler", 4: "k_euler_ancestral", 5: "k_heun", 6: "k_dpm_2", 7: "k_dpm_2_ancestral", 8: "k_lms", 9: "others"}'.
+|`sampler`|`uint8`| Sampler method (hyperparameter). Mapping: `{1: "ddim", 2: "plms", 3: "k_euler", 4: "k_euler_ancestral", 5: "k_heun", 6: "k_dpm_2", 7: "k_dpm_2_ancestral", 8: "k_lms", 9: "others"}`.
 |`width`|`uint16`|Image width.|
 |`height`|`uint16`|Image height.|
 |`user_name`|`string`|The unique discord ID's SHA256 hash of the user who generated this image. For example, the hash for `xiaohk#3146` is `e285b7ef63be99e9107cecd79b280bde602f17e0ca8363cb7a0889b67f0b5ed0`. "deleted_account" refer to users who have deleted their accounts. None means the image has been deleted before we scrape it for the second time.|
@@ -249,8 +249,8 @@ You can use the Hugging Face [`Datasets`](https://huggingface.co/docs/datasets/q
 import numpy as np
 from datasets import load_dataset
 
-# Load the dataset with the `random_1k [large]` subset
-dataset = load_dataset('poloclub/diffusiondb', 'random_1k [large]')
+# Load the dataset with the `large_random_1k` subset
+dataset = load_dataset('poloclub/diffusiondb', 'large_random_1k')
 ```
 
 #### Method 2. Use the PoloClub Downloader

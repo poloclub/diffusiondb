@@ -110,11 +110,11 @@ class DiffusionDB(datasets.GeneratorBasedBuilder):
         for sampling in ["first", "random"]:
             for is_large in [False, True]:
                 num_k_str = f"{num_k}k" if num_k < 1000 else f"{num_k // 1000}m"
-                subset_str = " [large]" if is_large else " [2m]"
+                subset_str = "large_" if is_large else "2m_"
 
                 if sampling == "random":
                     # Name the config
-                    cur_name = "random_" + num_k_str + subset_str
+                    cur_name = subset_str + "random_" + num_k_str
 
                     # Add a short description for each config
                     cur_description = (
@@ -128,7 +128,7 @@ class DiffusionDB(datasets.GeneratorBasedBuilder):
                     ).tolist()
                 else:
                     # Name the config
-                    cur_name = "first_" + num_k_str + subset_str
+                    cur_name = subset_str + "first_" + num_k_str
 
                     # Add a short description for each config
                     cur_description = f"The first {num_k_str} images in this dataset with their prompts and parameters"
@@ -151,11 +151,11 @@ class DiffusionDB(datasets.GeneratorBasedBuilder):
     for num_k in [5000, 10000]:
         for sampling in ["first", "random"]:
             num_k_str = f"{num_k // 1000}m"
-            subset_str = " [large]"
+            subset_str = "large_"
 
             if sampling == "random":
                 # Name the config
-                cur_name = "random_" + num_k_str + subset_str
+                cur_name = subset_str + "random_" + num_k_str
 
                 # Add a short description for each config
                 cur_description = (
@@ -169,7 +169,7 @@ class DiffusionDB(datasets.GeneratorBasedBuilder):
                 ).tolist()
             else:
                 # Name the config
-                cur_name = "first_" + num_k_str + subset_str
+                cur_name = subset_str + "first_" + num_k_str
 
                 # Add a short description for each config
                 cur_description = f"The first {num_k_str} images in this dataset with their prompts and parameters"
@@ -191,7 +191,7 @@ class DiffusionDB(datasets.GeneratorBasedBuilder):
     # Need to manually add all (2m) and all (large)
     BUILDER_CONFIGS.append(
         DiffusionDBConfig(
-            name="all [2m]",
+            name="2m_all",
             part_ids=_PART_IDS,
             is_large=False,
             description="All images with their prompts and parameters",
@@ -200,7 +200,7 @@ class DiffusionDB(datasets.GeneratorBasedBuilder):
 
     BUILDER_CONFIGS.append(
         DiffusionDBConfig(
-            name="all [large]",
+            name="large_all",
             part_ids=_PART_IDS_LARGE,
             is_large=True,
             description="All images with their prompts and parameters",
@@ -210,7 +210,7 @@ class DiffusionDB(datasets.GeneratorBasedBuilder):
     # We also prove a text-only option, which loads the meatadata parquet file
     BUILDER_CONFIGS.append(
         DiffusionDBConfig(
-            name="text_only [2m]",
+            name="2m_text_only",
             part_ids=[],
             is_large=False,
             description="Only include all prompts and parameters (no image)",
@@ -219,7 +219,7 @@ class DiffusionDB(datasets.GeneratorBasedBuilder):
 
     BUILDER_CONFIGS.append(
         DiffusionDBConfig(
-            name="text_only [large]",
+            name="large_text_only",
             part_ids=[],
             is_large=True,
             description="Only include all prompts and parameters (no image)",
@@ -227,7 +227,7 @@ class DiffusionDB(datasets.GeneratorBasedBuilder):
     )
 
     # Default to only load 1k random images
-    DEFAULT_CONFIG_NAME = "random_1k [2m]"
+    DEFAULT_CONFIG_NAME = "2m_random_1k"
 
     def _info(self):
         """Specify the information of DiffusionDB."""

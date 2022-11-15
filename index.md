@@ -229,7 +229,9 @@ Below are three random rows from `metadata.parquet`.
 |`prompt_nsfw`|`float32`|Likelihood of a prompt being NSFW. Scores are predicted by the library [Detoxicy](https://github.com/unitaryai/detoxify). Each score represents the maximum of `toxicity` and `sexual_explicit` (range from 0 to 1).|
 
 > **Warning**
-> Although the Stable Diffusion model has an NSFW filter that automatically blurs user-generated NSFW images, this NSFW filter is not perfect—DiffusionDB still contains some NSFW images. Therefore, we compute and provide the NSFW scores for images and prompts using the state-of-the-art models. The distribution of these scores can be found in our [research paper](https://arxiv.org/abs/2210.14896). Please decide an appropriate NSFW score threshold to filter out NSFW images before using DiffusionDB in your projects.
+> Although the Stable Diffusion model has an NSFW filter that automatically blurs user-generated NSFW images, this NSFW filter is not perfect—DiffusionDB still contains some NSFW images. Therefore, we compute and provide the NSFW scores for images and prompts using the state-of-the-art models. The distribution of these scores is shown below. Please decide an appropriate NSFW score threshold to filter out NSFW images before using DiffusionDB in your projects.
+
+<img src="https://i.imgur.com/1RiGAXL.png" width="100%">
 
 ### Data Splits
 

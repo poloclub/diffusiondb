@@ -131,7 +131,7 @@ Below are three random rows from `metadata.parquet`.
 |`seed`|`uint32`| Random seed used to generate this image.|
 |`step`|`uint16`| Step count (hyperparameter).|
 |`cfg`|`float32`| Guidance scale (hyperparameter).|
-|`sampler`|`uint8`| Sampler method (hyperparameter). Mapping: {1: "ddim", 2: "plms", 3: "k_euler", 4: "k_euler_ancestral", 5: "k_heun", 6: "k_dpm_2", 7: "k_dpm_2_ancestral", 8: "k_lms", 9: "others"}'.
+|`sampler`|`uint8`| Sampler method (hyperparameter). Mapping: `{1: "ddim", 2: "plms", 3: "k_euler", 4: "k_euler_ancestral", 5: "k_heun", 6: "k_dpm_2", 7: "k_dpm_2_ancestral", 8: "k_lms", 9: "others"}`.
 |`width`|`uint16`|Image width.|
 |`height`|`uint16`|Image height.|
 |`user_name`|`string`|The unique discord ID's SHA256 hash of the user who generated this image. For example, the hash for `xiaohk#3146` is `e285b7ef63be99e9107cecd79b280bde602f17e0ca8363cb7a0889b67f0b5ed0`. "deleted_account" refer to users who have deleted their accounts. None means the image has been deleted before we scrape it for the second time.|
@@ -140,7 +140,12 @@ Below are three random rows from `metadata.parquet`.
 |`prompt_nsfw`|`float32`|Likelihood of a prompt being NSFW. Scores are predicted by the library [Detoxicy](https://github.com/unitaryai/detoxify). Each score represents the maximum of `toxicity` and `sexual_explicit` (range from 0 to 1).|
 
 > **Warning**
-> Although the Stable Diffusion model has an NSFW filter that automatically blurs user-generated NSFW images, this NSFW filter is not perfect—DiffusionDB still contains some NSFW images. Therefore, we compute and provide the NSFW scores for images and prompts using the state-of-the-art models. The distribution of these scores can be found in our [research paper](https://arxiv.org/abs/2210.14896). Please decide an appropriate NSFW score threshold to filter out NSFW images before using DiffusionDB in your projects.
+> Although the Stable Diffusion model has an NSFW filter that automatically blurs user-generated NSFW images, this NSFW filter is not perfect—DiffusionDB still contains some NSFW images. Therefore, we compute and provide the NSFW scores for images and prompts using the state-of-the-art models. The distribution of these scores is shown below. Please decide an appropriate NSFW score threshold to filter out NSFW images before using DiffusionDB in your projects.
+
+
+<img src="https://i.imgur.com/1RiGAXL.png#gh-light-mode-only" width="100%">
+<img src="https://i.imgur.com/hiLOY8h.png#gh-dark-mode-only" width="100%">
+
 
 ## Loading DiffusionDB
 
@@ -154,8 +159,8 @@ You can use the Hugging Face [`Datasets`](https://huggingface.co/docs/datasets/q
 import numpy as np
 from datasets import load_dataset
 
-# Load the dataset with the `random_1k [large]` subset
-dataset = load_dataset('poloclub/diffusiondb', 'random_1k [large]')
+# Load the dataset with the `large_random_1k` subset
+dataset = load_dataset('poloclub/diffusiondb', 'large_random_1k')
 ```
 
 ### Method 2. Use a downloader script

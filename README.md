@@ -1,13 +1,10 @@
 # DiffusionDB  <a href="https://huggingface.co/datasets/poloclub/diffusiondb"><picture><source media="(prefers-color-scheme: dark)" srcset="https://i.imgur.com/yGxUUlX.png"><img src="favicon.ico" align="right" src="favicon.ico" height="40px"></picture>
 
-<picture><img ></img></picture></a>
-
 [![hugging](https://img.shields.io/badge/🤗%20Hugging%20Face-Datasets-yellow)](https://huggingface.co/datasets/poloclub/diffusiondb)
 [![license](https://img.shields.io/badge/License-CC0/MIT-blue)](#licensing)
 [![arxiv badge](https://img.shields.io/badge/arXiv-2210.14896-red)](https://arxiv.org/abs/2210.14896)
 [![datasheet](https://img.shields.io/badge/Data%20Sheet-Available-success)](https://poloclub.github.io/diffusiondb/datasheet.html)
 <!-- [![DOI:10.1145/3491101.3519653](https://img.shields.io/badge/DOI-10.1145/3491101.3519653-blue)](https://doi.org/10.1145/3491101.3519653) -->
-<!-- ![](https://i.imgur.com/OJtU5zv.png) -->
 
 <img width="100%" src="https://user-images.githubusercontent.com/15007159/201762588-f24db2b8-dbb2-4a94-947b-7de393fc3d33.gif">
 

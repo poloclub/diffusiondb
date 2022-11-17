@@ -69,7 +69,7 @@ We use a modularized file structure to distribute DiffusionDB. The 2 million ima
 │   │   ├── 0a0756e9-1249-4fe2-a21a-12c43656c7a3.webp
 │   │   ├── 0aa48f3d-f2d9-40a8-a800-c2c651ebba06.webp
 │   │   ├── [...]
-│   │   └── part-000001.json
+│   │   └── part-010001.json
 │   ├── part-010002
 │   ├── part-010003
 │   ├── [...]
@@ -143,7 +143,7 @@ Below are three random rows from `metadata.parquet`.
 
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://i.imgur.com/Yyu83vc.png">
+  <source media="(prefers-color-scheme: dark)" srcset="https://i.imgur.com/KLbJkUr.png">
   <img alt="NSFW Score distributions." src="https://i.imgur.com/1RiGAXL.png" width="100%">
 </picture>
 

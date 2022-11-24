@@ -47,28 +47,34 @@ _PART_IDS_LARGE = range(1, 14001)
 
 for i in _PART_IDS:
     _URLS[i] = hf_hub_url(
-        "datasets/poloclub/diffusiondb", filename=f"images/part-{i:06}.zip"
+        "poloclub/diffusiondb",
+        filename=f"images/part-{i:06}.zip",
+        repo_type="dataset",
     )
 
 for i in _PART_IDS_LARGE:
     if i < 10001:
         _URLS_LARGE[i] = hf_hub_url(
-            "datasets/poloclub/diffusiondb",
+            "poloclub/diffusiondb",
             filename=f"diffusiondb-large-part-1/part-{i:06}.zip",
+            repo_type="dataset",
         )
     else:
         _URLS_LARGE[i] = hf_hub_url(
-            "datasets/poloclub/diffusiondb",
+            "poloclub/diffusiondb",
             filename=f"diffusiondb-large-part-2/part-{i:06}.zip",
+            repo_type="dataset",
         )
 
 # Add the metadata parquet URL as well
 _URLS["metadata"] = hf_hub_url(
-    "datasets/poloclub/diffusiondb", filename="metadata.parquet"
+    "poloclub/diffusiondb", filename="metadata.parquet", repo_type="dataset"
 )
 
 _URLS_LARGE["metadata"] = hf_hub_url(
-    "datasets/poloclub/diffusiondb", filename="metadata-large.parquet"
+    "poloclub/diffusiondb",
+    filename="metadata-large.parquet",
+    repo_type="dataset",
 )
 
 _SAMPLER_DICT = {

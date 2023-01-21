@@ -156,6 +156,9 @@ DiffusionDB is large (1.6TB or 6.5 TB)! However, with our modularized file struc
 
 You can use the Hugging Face [`Datasets`](https://huggingface.co/docs/datasets/quickstart) library to easily load prompts and images from DiffusionDB. We pre-defined 16 DiffusionDB subsets (configurations) based on the number of instances. You can see all subsets in the [Dataset Preview](https://huggingface.co/datasets/poloclub/diffusiondb/viewer/all/train).
 
+> **Note**
+> To use Datasets Loader, you need to install `Pillow` as well (`pip install Pillow`)
+
 ```python
 import numpy as np
 from datasets import load_dataset

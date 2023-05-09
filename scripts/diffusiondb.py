@@ -348,7 +348,9 @@ class DiffusionDB(datasets.GeneratorBasedBuilder):
                     "width": row["width"],
                     "height": row["height"],
                     "user_name": row["user_name"],
-                    "timestamp": row["timestamp"],
+                    "timestamp": None
+                    if pd.isnull(row["timestamp"])
+                    else row["timestamp"],
                     "image_nsfw": row["image_nsfw"],
                     "prompt_nsfw": row["prompt_nsfw"],
                 }
@@ -398,7 +400,9 @@ class DiffusionDB(datasets.GeneratorBasedBuilder):
                         "width": query_result["width"].to_list()[0],
                         "height": query_result["height"].to_list()[0],
                         "user_name": query_result["user_name"].to_list()[0],
-                        "timestamp": query_result["timestamp"].to_list()[0],
+                        "timestamp": None
+                        if pd.isnull(query_result["timestamp"].to_list()[0])
+                        else query_result["timestamp"].to_list()[0],
                         "image_nsfw": query_result["image_nsfw"].to_list()[0],
                         "prompt_nsfw": query_result["prompt_nsfw"].to_list()[0],
                     }

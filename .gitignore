@@ -2,3 +2,4 @@
 test*.ipynb
 .ipynb_checkpoints
 Pipfile.lock
+explorer/*/*.ndjson

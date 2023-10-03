@@ -1,5 +1,6 @@
+theme: just-the-docs
 remote_theme: just-the-docs/just-the-docs
-title: "DiffusionDB"
+title: 'DiffusionDB'
 
 # Enable or disable the site search
 # Supports true (default) or false
@@ -29,7 +30,6 @@ search:
   button: false
 
 color_scheme: light
-
 
 # External navigation links
 nav_external_links:

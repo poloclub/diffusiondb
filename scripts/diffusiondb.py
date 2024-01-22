@@ -232,6 +232,18 @@ class DiffusionDB(datasets.GeneratorBasedBuilder):
         ),
     )
 
+    # Add a random 1k from 2M as the first entry point to show on HF data viewer
+    # Sample part_ids
+    part_ids = np.random.choice(_PART_IDS, 1000, replace=False).tolist()
+    BUILDER_CONFIGS.append(
+        DiffusionDBConfig(
+            name="1k_random_2m",
+            part_ids=part_ids,
+            is_large=False,
+            description="Another random 1k images with meta data from DiffusionDB 2M",
+        ),
+    )
+
     # Default to only load 1k random images
     DEFAULT_CONFIG_NAME = "2m_random_1k"
 

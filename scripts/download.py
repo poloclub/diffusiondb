@@ -32,7 +32,7 @@ parser.add_argument(
     "-r",
     "--range",
     type=int,
-    default=2000,
+    default=None,
     help="Upper bound of range if -i is provided",
 )
 parser.add_argument(
@@ -69,14 +69,6 @@ if args.unzip:
 if args.large:
     large = args.large
 
-if (
-    args.index and args.range and args.output and args.unzip and args.large is None
-):  # if no arguments are provided, set default behaviour
-    index = 1
-    range_max = 2000
-    output = "images"
-    unzip = False
-    large = False
 
 
 def download(index=1, range_index=0, output="", large=False):
@@ -192,11 +184,11 @@ def main(index=None, range_max=None, output=None, unzip=None, large=None):
         images) instead of DiffusionDB 2M (2 million images)
     :return: A list of files that have been downloaded
     """
-    if range_max - index > 1999:
-        confirmation = input("Do you have at least 1.7Tb free: (y/n)")
-        if confirmation != "y":
-            return
     if index and range_max:
+        if range_max - index >= 1999:
+            confirmation = input("Do you have at least 1.7Tb free: (y/n)")
+            if confirmation != "y":
+                return
         files = download(index, range_max, output, large)
         if unzip:
             unzip_all(files)

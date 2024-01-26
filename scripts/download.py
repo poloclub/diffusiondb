@@ -69,14 +69,6 @@ if args.unzip:
 if args.large:
     large = args.large
 
-if (
-    args.index and args.range and args.output and args.unzip and args.large is None
-):  # if no arguments are provided, set default behaviour
-    index = 1
-    range_max = 0
-    output = "images"
-    unzip = False
-    large = False
 
 
 def download(index=1, range_index=0, output="", large=False):
@@ -193,7 +185,7 @@ def main(index=None, range_max=None, output=None, unzip=None, large=None):
     :return: A list of files that have been downloaded
     """
     if index and range_max:
-        if range_max - index >= 1999:#This fix right here
+        if range_max - index >= 1999:
             confirmation = input("Do you have at least 1.7Tb free: (y/n)")
             if confirmation != "y":
                 return

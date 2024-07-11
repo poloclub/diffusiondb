@@ -41,4 +41,7 @@ nav_external_links:
   - title: 🔍 Explore Prompts with Interactive Visualization
     url: https://poloclub.github.io/diffusiondb/explorer
     ide_icon: false # set to true to hide the external link icon - defaults to false
+  - title: 🎓 Learn how Stable Diffusion Works
+    url: https://poloclub.github.io/diffusion-explainer/
+    ide_icon: false # set to true to hide the external link icon - defaults to false
 
